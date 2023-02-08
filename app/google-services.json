@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701935263661",
+    "project_id": "gathering-of-gamers",
+    "storage_bucket": "gathering-of-gamers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701935263661:android:9e5d4ae9f42109393a8b24",
+        "android_client_info": {
+          "package_name": "com.example.gatheringofgamers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701935263661-p9gtk5nccg7u42invpcto757eivog0jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdYnQKJVgQ6_Eo3T1iNUwbZSkAXxnjzBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701935263661-p9gtk5nccg7u42invpcto757eivog0jm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

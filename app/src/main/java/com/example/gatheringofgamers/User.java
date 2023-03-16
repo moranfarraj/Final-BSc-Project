@@ -1,57 +1,29 @@
 package com.example.gatheringofgamers;
-
 import java.sql.Date;
 import java.util.ArrayList;
-
 public class User {
-    private final int userID;
-    private String username;
-    private String password;
-    private Date birthDate;
-    private ArrayList<String> languages;
+    public String name;
+    public String email;
+    public String password;
+    public int age;
+    public String gender;
+    public String location;
 
-    public User(int userID, String username, String password, Date birthDate, ArrayList<String> languages) {
-        this.userID = userID;
-        this.username = username;
+    public User() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+
+    public User(String name, String email, String password, int age, String gender, String location, String interests) {
+        this.name = name;
+        this.email = email;
         this.password = password;
-        this.birthDate = birthDate;
-        this.languages = languages;
+        this.age = age;
+        this.gender = gender;
+        this.location = location;
     }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public ArrayList<String> getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(ArrayList<String> languages) {
-        this.languages = languages;
-    }
-
 }
+
+
+
+
+

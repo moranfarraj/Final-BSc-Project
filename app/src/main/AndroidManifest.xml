@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".mainPageActivity"></activity>
+        <activity android:name=".gettingStartedActivity"></activity>
     </application>
 
 </manifest>

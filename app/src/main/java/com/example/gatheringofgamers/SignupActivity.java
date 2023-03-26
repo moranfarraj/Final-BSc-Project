@@ -23,11 +23,12 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
 
     private Spinner mSpinnerCountries;
-
+    private String userId;
     private FirebaseFirestore mFirestore;
 
     private List<String> mCountryList;
     private ArrayAdapter<String> mCountryAdapter;
+    private String tempUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,7 @@ public class SignupActivity extends AppCompatActivity {
     }
     public void SignupButton(View view) {
         CollectionReference usersRef = mFirestore.collection("users");
-        EditText nameEditText = findViewById(R.id.editTextName);
-        EditText emailEditText = findViewById(R.id.editTextEmail);
+        EditText usernameEditText = findViewById(R.id.editTextUsername); // Updated reference for username field
         EditText passwordEditText = findViewById(R.id.editTextPassword);
         EditText confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword);
         EditText dateOfBirthEditText = findViewById(R.id.editTextDateOfBirth);
@@ -92,8 +92,7 @@ public class SignupActivity extends AppCompatActivity {
 
         RadioGroup genderRadioGroup = findViewById(R.id.radioGroupGender);
 
-        String name = nameEditText.getText().toString();
-        String email = emailEditText.getText().toString();
+        String username = usernameEditText.getText().toString(); // Updated variable name for username
         String password = passwordEditText.getText().toString();
         String confirmPassword = confirmPasswordEditText.getText().toString();
         String dateOfBirth = dateOfBirthEditText.getText().toString();
@@ -111,7 +110,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         // Validate the user's input
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword) || TextUtils.isEmpty(dateOfBirth)) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword) || TextUtils.isEmpty(dateOfBirth)) {
             // Display an error message to the user
             Toast.makeText(getApplicationContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -125,8 +124,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // Create a new user object
         Map<String, Object> user = new HashMap<>();
-        user.put("name", name);
-        user.put("email", email);
+        user.put("username", username); // Updated field for username
         user.put("password", password);
         user.put("country", country);
         user.put("gender", gender);
@@ -139,6 +137,9 @@ public class SignupActivity extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         // Display a success message to the user
                         Toast.makeText(getApplicationContext(), "User created successfully", Toast.LENGTH_SHORT).show();
+                        tempUser = username;
+                        Button gettingStartedButton = findViewById(R.id.getting_Started_Button);
+                        gettingStartedButton.setVisibility(View.VISIBLE);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -149,9 +150,39 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void backToLogin(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+    public void gettingStartedButton(View view){
+        CollectionReference usersRef = mFirestore.collection("users");
+        Query query = usersRef.whereEqualTo("username", tempUser);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    boolean foundUser = false;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.getString("username").equals(tempUser)) {
+                            foundUser = true;
+                            // Save user ID
+                            String userID = document.getId();
+                            // Save user name in intent
+                            Intent intent = new Intent(SignupActivity.this, gettingStartedActivity.class);
+                            intent.putExtra("userID", userID);
+                            startActivity(intent);
+                            break;
+                        }
+                    }
+                    if (!foundUser) {
+                        Toast.makeText(SignupActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SignupActivity.this, "Error getting user", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     }
 

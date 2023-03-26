@@ -13,18 +13,11 @@
             android:textStyle="bold" />
 
     <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-
-    <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:hint="Username"
+            android:inputType="text" />
 
     <EditText
             android:id="@+id/editTextPassword"
@@ -90,5 +83,12 @@
             android:layout_height="wrap_content"
             android:text="Back"
             android:onClick="backToLogin"/>
+    <Button
+            android:id="@+id/getting_Started_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:onClick="gettingStartedButton"
+            android:visibility="gone" />
 
 </LinearLayout>

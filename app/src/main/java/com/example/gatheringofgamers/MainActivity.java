@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             DocumentSnapshot userSnapshot = queryDocumentSnapshots.getDocuments().get(0);
-                            String username = userSnapshot.getId();
+                            String userID = userSnapshot.getId();
                             // Username and password are correct, start the main page activity
                             Intent intent = new Intent(getApplicationContext(), mainPageActivity.class);
-                            intent.putExtra("username", username);
+                            intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else {
                             // Display an error message to the user

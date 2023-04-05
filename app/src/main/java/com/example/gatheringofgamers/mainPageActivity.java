@@ -28,10 +28,12 @@ public class mainPageActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
+
         // Create adapter for ViewPager
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ProfileFragment(), "Profile");
+        adapter.addFragment(ProfileFragment.newInstance(userID), "Profile");
         adapter.addFragment(new Tab2Fragment(), "Tab 2");
+
 
         viewPager.setAdapter(adapter);
 

@@ -2,7 +2,6 @@ package com.example.gatheringofgamers;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
@@ -32,7 +31,7 @@ public class mainPageActivity extends AppCompatActivity {
         // Create adapter for ViewPager
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(ProfileFragment.newInstance(userID), "Profile");
-        adapter.addFragment(new Tab2Fragment(), "Tab 2");
+        adapter.addFragment(SearchFragment.newInstance(userID), "Match Teammates");
 
 
         viewPager.setAdapter(adapter);

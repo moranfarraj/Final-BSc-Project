@@ -27,4 +27,5 @@
         <activity android:name=".gettingStartedActivity"></activity>
     </application>
 
+
 </manifest>

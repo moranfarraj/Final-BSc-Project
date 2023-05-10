@@ -3,13 +3,14 @@ import java.sql.Date;
 import java.util.ArrayList;
 public class User {
     public String name;
-    public String email;
     public String password;
     public int age;
     public String gender;
+    private String id;
     public String location;
 
-    public User(String name, String gender, String location) {
+    public User(String id,String name, String gender, String location) {
+        this.id =id ;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -24,16 +25,15 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getId() {
+        return id;
     }
 
     public void setPassword(String password) {
@@ -70,7 +70,6 @@ public class User {
 
     public User(String name, String email, String password, int age, String gender, String location, String interests) {
         this.name = name;
-        this.email = email;
         this.password = password;
         this.age = age;
         this.gender = gender;

@@ -159,12 +159,10 @@ public class SearchFragment extends Fragment {
                     QuerySnapshot querySnapshot = task.getResult();
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();
                     for (DocumentSnapshot document : documents) {
-                        User user = new User(document.get("username").toString(),document.get("gender").toString(),document.get("country").toString());
+                        User user = new User(document.getId(),document.get("username").toString(),document.get("gender").toString(),document.get("country").toString());
                         users.add(user);
-                        Log.d(TAG, document.getId() + " => " + document.getData());
                     }
                     RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
-                    //CHECK THIS CODE IF ANY ERROR POPS!
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(),LinearLayoutManager.HORIZONTAL,false));
                     recyclerView.setAdapter(new MyAdapter(v.getContext(),users));
                 } else {

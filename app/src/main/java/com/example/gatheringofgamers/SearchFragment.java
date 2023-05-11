@@ -36,6 +36,7 @@ public class SearchFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private FirebaseFirestore db;
+    private User currUser;
     private String userId;
     private String selectedCountry;
     private List<String> mCountryList;
@@ -59,7 +60,6 @@ public class SearchFragment extends Fragment {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         args.putString(ARG_USER_ID, userId);
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -164,7 +164,7 @@ public class SearchFragment extends Fragment {
                     }
                     RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(),LinearLayoutManager.HORIZONTAL,false));
-                    recyclerView.setAdapter(new MyAdapter(v.getContext(),users));
+                    recyclerView.setAdapter(new MyAdapter(v.getContext(),users,userId));
                 } else {
                     // Handle any errors
                     Log.w(TAG, "Error getting documents.", task.getException());

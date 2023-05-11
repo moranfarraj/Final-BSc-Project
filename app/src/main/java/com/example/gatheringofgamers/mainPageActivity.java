@@ -2,6 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
@@ -10,6 +11,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 public class mainPageActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class mainPageActivity extends AppCompatActivity {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(ProfileFragment.newInstance(userID), "Profile");
         adapter.addFragment(SearchFragment.newInstance(userID), "Match Teammates");
+        adapter.addFragment(FriendsFragment.newInstance(userID),"Allies");
 
 
         viewPager.setAdapter(adapter);

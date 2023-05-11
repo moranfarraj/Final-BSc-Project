@@ -3,6 +3,7 @@ package com.example.gatheringofgamers;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +16,14 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView genderView;
     TextView locationView;
     ListView gamesList;
+    Button addTeammate;
     public MyViewHolder(View itemView){
         super(itemView);
+        gamesList = itemView.findViewById(R.id.gamesListView);
         nameView = itemView.findViewById(R.id.name);
         genderView = itemView.findViewById(R.id.gender);
         locationView = itemView.findViewById(R.id.location);
-        gamesList = itemView.findViewById(R.id.gamesListView);
+        addTeammate = itemView.findViewById(R.id.addTeammateButton);
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -28,10 +31,9 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
                 showGameInfo(view,position,id);
             }
         });
-
-
-        }
+    }
         public void showGameInfo(View v,int position,long id){
             Log.d(TAG, "CHECKING FUNCTION CALL!");
         }
+
 }

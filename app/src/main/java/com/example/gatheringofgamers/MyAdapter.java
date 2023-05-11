@@ -5,18 +5,24 @@ import android.content.Context;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -24,11 +30,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
     List<User> users;
+    Button addTeammateBut;
+    String userId;
+    String currUser;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference userGamesRef;
     CollectionReference gamesRef;
 
-    public MyAdapter(Context context, List<User> users) {
+    public MyAdapter(Context context, List<User> users,String user) {
+        this.currUser = user;
         this.context = context;
         this.users = users;
     }
@@ -44,12 +54,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         List<String> games = new ArrayList<>();
+        userId = users.get(position).getId();
         userGamesRef = db.collection("userGames");
         gamesRef = db.collection("games");
         List<userGames> userGamesList = new ArrayList<>();
         holder.nameView.setText("Name:"+users.get(position).getName());
         holder.genderView.setText("Gender:"+users.get(position).getGender());
         holder.locationView.setText("Location:"+users.get(position).getLocation());
+        addTeammateBut = holder.addTeammate;
+        addTeammateBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTeammateFunction(view);
+            }
+        });
+
         Query query;
         //CHECK HERE!!!!
         Log.d(TAG, "Querying userGames collection...");
@@ -96,5 +115,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public int getItemCount() {
         return users.size();
+    }
+
+    public void addTeammateFunction(View v){
+        String currentUserId = currUser;
+        String teammateId = userId;
+        FriendRequest friendRequest = new FriendRequest(currentUserId,teammateId,"pending");
+        db.collection("friendRequests").add(friendRequest)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.w(TAG,"Successfully added user"+teammateId);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Log.w(TAG,"Error adding user"+teammateId);
+                    }
+                });
     }
 }

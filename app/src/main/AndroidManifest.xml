@@ -25,6 +25,7 @@
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".mainPageActivity"></activity>
         <activity android:name=".gettingStartedActivity"></activity>
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 

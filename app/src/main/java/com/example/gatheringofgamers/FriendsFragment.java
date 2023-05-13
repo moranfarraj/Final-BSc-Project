@@ -1,5 +1,6 @@
 package com.example.gatheringofgamers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.*;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.*;
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +33,8 @@ public class FriendsFragment extends Fragment {
     private FirebaseFirestore db;
     private String username;
     RecyclerView.Adapter adapter;
+    CollectionReference usersRef;
+    List<User> users;
     private String userId;
 
     public FriendsFragment() {
@@ -51,6 +51,7 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        users = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -61,6 +62,7 @@ public class FriendsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        usersRef = db.collection("users");
         View view = inflater.inflate(R.layout.friendslayout, container, false);
         TabLayout tabLayout = view.findViewById(R.id.friendList_layout);
 //        Query query;
@@ -89,28 +91,153 @@ public class FriendsFragment extends Fragment {
                             friends.add(friendRequest);
                         }
                     }
-                    RecyclerView recyclerView = view.findViewById(R.id.friends_list);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-                    adapter = new FriendsAdapter(view.getContext(),friends,userId,0);
-                    recyclerView.setAdapter(adapter);
+
+                    Log.w(TAG,"This is the sent list:"+friendRequestsSent);
+                    Log.w(TAG,"This is the sent received:"+friendRequestsReceived);
+                    Log.w(TAG,"This is the friend list:"+friends);
 
                     tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                         @Override
                         public void onTabSelected(TabLayout.Tab tab) {
+
                             // Check which tab is selected and pass the appropriate list to the adapter
                             if (tab.getPosition() == 0) {
-                                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-                                adapter = new FriendsAdapter(view.getContext(),friends,userId,tab.getPosition());
-                                recyclerView.setAdapter(adapter);
+                                int count = 0;
+                                users = new ArrayList<>();
+                                Query lastQuery = null;
+                                List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                                for (FriendRequest request : friends) {
+                                    Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
+                                    tasks.add(task);
+                                    task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                                                    users.add(user);
+                                                    Log.w(TAG, "this is the current user:" + user.getName());
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                                Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<List<Object>> task) {
+                                        RecyclerView recyclerView = view.findViewById(R.id.friends_list);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+                                        adapter = new FriendsAdapter(view.getContext(), users, userId, tab.getPosition(), new FriendsAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(int position,User user) {
+                                                String ID = user.getId();
+                                                Log.w(TAG,"go to profile:"+ID);
+                                                Intent intent = new Intent(view.getContext(),UserProfileActivity.class);
+                                                intent.putExtra("userID",ID);
+                                                view.getContext().startActivity(intent);
+                                            }
+                                        });
+                                        Log.w(TAG, "friends list size:" + users.size());
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+
+                                    }
+                                });
+
+
                             } else if (tab.getPosition() == 1) {
-                                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-                                adapter = new FriendsAdapter(view.getContext(),friendRequestsReceived,userId,tab.getPosition());
-                                recyclerView.setAdapter(adapter);
+                                int count = 0;
+                                users = new ArrayList<>();
+                                Query lastQuery = null;
+                                List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                                for (FriendRequest request : friendRequestsReceived) {
+                                    Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
+                                    tasks.add(task);
+                                    task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                                                    users.add(user);
+                                                    Log.w(TAG, "this is the current user:" + user.getName());
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                                Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<List<Object>> task) {
+                                        RecyclerView recyclerView = view.findViewById(R.id.friends_list);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+                                        adapter = new FriendsAdapter(view.getContext(), users, userId, tab.getPosition(), new FriendsAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(int position,User user) {
+                                                String ID = user.getId();
+                                                Log.w(TAG,"go to profile:"+ID);
+                                                Intent intent = new Intent(view.getContext(),UserProfileActivity.class);
+                                                intent.putExtra("userID",ID);
+                                                view.getContext().startActivity(intent);
+                                            }
+                                        });
+                                        Log.w(TAG, "friends list size:" + users.size());
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+
+                                    }
+                                });
 
                             } else if (tab.getPosition() == 2) {
-                                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-                                adapter = new FriendsAdapter(view.getContext(),friendRequestsSent,userId,tab.getPosition());
-                                recyclerView.setAdapter(adapter);
+                                int count = 0;
+                                users = new ArrayList<>();
+                                Query lastQuery = null;
+                                List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                                for (FriendRequest request : friendRequestsSent) {
+                                    Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
+                                    tasks.add(task);
+                                    task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                                                    users.add(user);
+                                                    Log.w(TAG, "this is the current user:" + user.getName());
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                                Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<List<Object>> task) {
+                                        RecyclerView recyclerView = view.findViewById(R.id.friends_list);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+                                        adapter = new FriendsAdapter(view.getContext(), users, userId, tab.getPosition(), new FriendsAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(int position,User user) {
+                                                String ID = user.getId();
+                                                Log.w(TAG,"go to profile:"+ID);
+                                                Intent intent = new Intent(view.getContext(),UserProfileActivity.class);
+                                                intent.putExtra("userID",ID);
+                                                view.getContext().startActivity(intent);
+                                            }
+                                        });
+                                        Log.w(TAG, "friends list size:" + users.size());
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+
+                                    }
+                                });
+
+
                             }
                         }
 

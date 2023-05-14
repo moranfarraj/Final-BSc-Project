@@ -163,8 +163,11 @@ public class SearchFragment extends Fragment {
                         users.add(user);
                     }
                     RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(),LinearLayoutManager.HORIZONTAL,false));
-                    recyclerView.setAdapter(new MyAdapter(v.getContext(),users,userId));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false));
+                    RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
                 } else {
                     // Handle any errors
                     Log.w(TAG, "Error getting documents.", task.getException());
@@ -173,3 +176,56 @@ public class SearchFragment extends Fragment {
         });
     }
 }
+
+/*          query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    final List<User> users = new ArrayList<>();
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    for (DocumentSnapshot document : documents) {
+                        User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                        users.add(user);
+                    }
+
+                    // Get the IDs of users who have sent you friend requests, you have sent friend requests, and your current friends
+                    CollectionReference friendRequestsRef = db.collection("friendRequests");
+                    friendRequestsRef.whereEqualTo("from", userId).get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        List<String> friendRequestsIds = new ArrayList<>();
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            friendRequestsIds.add(document.getId());
+                                        }
+
+                                        // Remove these users from 'users' list
+                                        Iterator<User> iterator = users.iterator();
+                                        while (iterator.hasNext()) {
+                                            User user = iterator.next();
+                                            if (user.getId().equals(userId) || friendRequestsIds.contains(user.getId())) {
+                                                iterator.remove();
+                                            }
+                                        }
+
+                                        RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false));
+                                        RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+
+                                    } else {
+                                        Log.w(TAG, "Error getting friend requests.", task.getException());
+                                    }
+                                }
+                            });
+                } else {
+                    // Handle any errors
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+}*/

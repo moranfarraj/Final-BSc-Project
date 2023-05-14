@@ -34,7 +34,7 @@ public class mainPageActivity extends AppCompatActivity {
         // Create adapter for ViewPager
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(ProfileFragment.newInstance(userID), "Profile");
-        adapter.addFragment(SearchFragment.newInstance(userID), "Match Teammates");
+        adapter.addFragment(SearchFragment.newInstance(userID), "Match Allies");
         adapter.addFragment(FriendsFragment.newInstance(userID),"Allies");
 
 

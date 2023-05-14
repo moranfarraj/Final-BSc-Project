@@ -153,7 +153,7 @@ public class FriendsFragment extends Fragment {
                                 Query lastQuery = null;
                                 List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                                 for (FriendRequest request : friendRequestsReceived) {
-                                    Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
+                                    Task<DocumentSnapshot> task = usersRef.document(request.getFrom()).get();
                                     tasks.add(task);
                                     task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override

@@ -1,9 +1,13 @@
 package com.example.gatheringofgamers;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +33,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ViewPager viewPager;
     private TextView name ;
+    private ImageView profile_img;
     private String userID;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class UserProfileActivity extends AppCompatActivity {
         CollectionReference usersRef = db.collection("users");
         setContentView(R.layout.userprofile);
         name = findViewById(R.id.profile_name);
+        profile_img = findViewById(R.id.profile_picture);
         userID = getIntent().getStringExtra("userID");
         Task<DocumentSnapshot> task = usersRef.document(userID).get();
         task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -46,6 +52,15 @@ public class UserProfileActivity extends AppCompatActivity {
                     if (document.exists()) {
                         User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
                         name.setText(user.getName());
+                        String encodedImage = document.getString("image");
+
+                        if (encodedImage != null) {
+                            // Decode the Base64 string and convert it into a Bitmap
+                            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            // Set the Bitmap in the ImageView
+                            profile_img.setImageBitmap(decodedByte);
+                        }
                     }
                 }
             }

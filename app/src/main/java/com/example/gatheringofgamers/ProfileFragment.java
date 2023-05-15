@@ -1,12 +1,15 @@
 package com.example.gatheringofgamers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,7 +30,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +41,8 @@ public class ProfileFragment extends Fragment {
 
     private static final String ARG_USER_ID = "user_id";
     private static final int GALLERY_REQUEST_CODE = 123; // You can choose any integer here
+//    private static final int CAMERA_REQUEST_CODE = 124; // You can choose any integer here
+
 
 
     private ViewPager viewPager;
@@ -110,29 +119,47 @@ public class ProfileFragment extends Fragment {
 
         // Declare the editProfilePictureButton
         Button editProfilePictureButton = view.findViewById(R.id.editProfilePictureButton);
+
+        // new is below
         editProfilePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, GALLERY_REQUEST_CODE);
+                // create a dialog here to let the user choose between taking a new photo or choosing from gallery
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Choose a picture");
+                builder.setMessage("Would you like to take a new picture or choose one from your gallery?");
+                builder.setPositiveButton("Take Photo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO Take Photo
+                    }
+                });
+                builder.setNegativeButton("Choose from Gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, GALLERY_REQUEST_CODE);
+                    }
+                });
+                builder.show();
             }
         });
 
+
         return view;
     }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-//        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-//        switch(requestCode) {
-//            case GALLERY_REQUEST_CODE:
-//                if(resultCode == Activity.RESULT_OK){
-//                    Uri selectedImage = imageReturnedIntent.getData();
-//                    profile_img.setImageURI(selectedImage);
-//                    image = selectedImage;
-//                    // Use the uri to upload it to Firebase if you want
-//                }
-//        }
+//    private File createImageFile() throws IOException {
+//        // Create an image file name
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "JPEG_" + timeStamp + "_";
+//        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        return image;
 //    }
 
     @Override
@@ -162,6 +189,30 @@ public class ProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
+//                break;
+//            case CAMERA_REQUEST_CODE:
+//                if(resultCode == Activity.RESULT_OK){
+//                    // The image is saved to the given Uri
+//                    Bitmap bitmap = null;
+//                    try {
+//                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    profile_img.setImageBitmap(bitmap);
+//
+//                    // Convert the image to a Base64 string
+//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                    byte[] bytes = baos.toByteArray();
+//                    String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+//
+//                    // Save the Base64 string to Firestore
+//                    Map<String, Object> user = new HashMap<>();
+//                    user.put("image", encodedImage);
+//                    db.collection("users").document(userId).update(user);
+//                }
+//                break;
         }
     }
 

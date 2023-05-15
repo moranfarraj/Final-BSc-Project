@@ -74,88 +74,88 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
             delete_btn.setVisibility(View.VISIBLE);
             chat_btn.setVisibility(View.GONE);
         }
-            accept_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    Log.w(TAG, "This is accept request button:" + users.get(position).getId());
-                    friendsRef.whereEqualTo("from",users.get(position).getId()).whereEqualTo("to",userId)
-                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                    if (!queryDocumentSnapshots.isEmpty()) {
-                                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                        Log.w(TAG,document.getId());
-                                        friendsRef.document(document.getId()).update("status", "friends");
-                                        Toast.makeText(itemView.getContext(), "Ally Added!", Toast.LENGTH_SHORT).show();
+        accept_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = getAdapterPosition();
+                Log.w(TAG, "This is accept request button:" + users.get(position).getId());
+                friendsRef.whereEqualTo("from",users.get(position).getId()).whereEqualTo("to",userId)
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                    Log.w(TAG,document.getId());
+                                    friendsRef.document(document.getId()).update("status", "friends");
+                                    Toast.makeText(itemView.getContext(), "Ally Added!", Toast.LENGTH_SHORT).show();
 
-                                    }
                                 }
-                            });
-                }
-            });
+                            }
+                        });
+            }
+        });
 
-            decline_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    Log.w(TAG, "This is decline request button:" + users.get(position).getId());
-                    friendsRef.whereEqualTo("from",users.get(position).getId()).whereEqualTo("to",userId)
-                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                    if (!queryDocumentSnapshots.isEmpty()) {
-                                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                        Log.w(TAG,document.getId());
-                                        friendsRef.document(document.getId()).delete()
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        Toast.makeText(itemView.getContext(), "Friend Request Declined!", Toast.LENGTH_SHORT).show();
-                                                        adapter.notifyDataSetChanged();
-                                                    }
-                                                }) .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(itemView.getContext(), "Failed To Delete Friend Request!", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                    }
+        decline_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = getAdapterPosition();
+                Log.w(TAG, "This is decline request button:" + users.get(position).getId());
+                friendsRef.whereEqualTo("from",users.get(position).getId()).whereEqualTo("to",userId)
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                    Log.w(TAG,document.getId());
+                                    friendsRef.document(document.getId()).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Toast.makeText(itemView.getContext(), "Friend Request Declined!", Toast.LENGTH_SHORT).show();
+                                                    adapter.notifyDataSetChanged();
+                                                }
+                                            }) .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(itemView.getContext(), "Failed To Delete Friend Request!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                 }
-                            });
-                }
-            });
-            delete_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    Log.w(TAG, "This is delete sent request button:" + users.get(position).getId());
-                    friendsRef.whereEqualTo("from",userId).whereEqualTo("to",users.get(position).getId())
-                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                    if (!queryDocumentSnapshots.isEmpty()) {
-                                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                        Log.w(TAG,document.getId());
-                                        friendsRef.document(document.getId()).delete()
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        Toast.makeText(itemView.getContext(), "Friend Request Deleted!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = getAdapterPosition();
+                Log.w(TAG, "This is delete sent request button:" + users.get(position).getId());
+                friendsRef.whereEqualTo("from",userId).whereEqualTo("to",users.get(position).getId())
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                    Log.w(TAG,document.getId());
+                                    friendsRef.document(document.getId()).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Toast.makeText(itemView.getContext(), "Friend Request Deleted!", Toast.LENGTH_SHORT).show();
 
-                                                        adapter.notifyDataSetChanged();
-                                                    }
-                                                }) .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(itemView.getContext(), "Failed To Delete Friend Request!", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                    }
+                                                    adapter.notifyDataSetChanged();
+                                                }
+                                            }) .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(itemView.getContext(), "Failed To Delete Friend Request!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                 }
-                            });
-                }
-            });
+                            }
+                        });
+            }
+        });
         chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,6 +165,6 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
             }
         });
 
-        }
     }
+}
 

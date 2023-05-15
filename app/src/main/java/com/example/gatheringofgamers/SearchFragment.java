@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,10 +39,15 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private FirebaseFirestore db;
     CollectionReference friendsRef;
+    CollectionReference gamesRef;
+    ArrayList gameList;
+    Spinner gamesSpinner;
+    ArrayAdapter<String> gamesAdapter;
     private User currUser;
     private String userId;
     private String selectedCountry;
     private List<String> mCountryList;
+    private List<String> gamesList;
     private ArrayAdapter<String> mCountryAdapter;
 
 
@@ -70,6 +76,7 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         friendsRef = db.collection("friendRequests");
+        gamesRef = db.collection("games");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_USER_ID);
@@ -102,6 +109,39 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+        gameList = new ArrayList<>();
+        gamesSpinner = view.findViewById(R.id.game_spinner);
+        gamesAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gameList);
+        gamesSpinner.setAdapter(gamesAdapter);
+        Query gameQuery = gamesRef.orderBy("name",Query.Direction.ASCENDING);
+        gameQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot document : task.getResult().getDocuments()){
+                        String game = document.getString("name");
+                        gameList.add(game);
+                    }
+                    gamesAdapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(view.getContext(), "Error getting games", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        gamesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Get selected country
+                String selectedGame = parent.getItemAtPosition(position).toString();
+                Toast.makeText(view.getContext(), "Selected game: " + selectedGame, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         // Set spinner item selected listener
         mSpinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -116,6 +156,7 @@ public class SearchFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         Button searchBut = view.findViewById(R.id.search_button);
         searchBut.setOnClickListener(new View.OnClickListener() {
             @Override

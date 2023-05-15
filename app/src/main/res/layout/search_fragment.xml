@@ -87,6 +87,16 @@
                 android:layout_height="wrap_content"
                 android:text="100"/>
     </LinearLayout>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Game:"
+            android:textStyle="bold"/>
+
+    <Spinner
+            android:id="@+id/game_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     <Button
             android:id="@+id/search_button"

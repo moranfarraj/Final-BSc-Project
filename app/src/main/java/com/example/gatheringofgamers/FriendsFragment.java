@@ -88,7 +88,9 @@ public class FriendsFragment extends Fragment {
                             }
                         }
                         else{
-                            friends.add(friendRequest);
+                            if(document.get("to").toString().equals(userId) || document.get("from").toString().equals(userId)) {
+                                friends.add(friendRequest);
+                            }
                         }
                     }
 
@@ -101,27 +103,48 @@ public class FriendsFragment extends Fragment {
                         public void onTabSelected(TabLayout.Tab tab) {
 
                             // Check which tab is selected and pass the appropriate list to the adapter
+                            //fix tab 0 which shows the users that are friends.
                             if (tab.getPosition() == 0) {
                                 int count = 0;
                                 users = new ArrayList<>();
                                 Query lastQuery = null;
                                 List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                                 for (FriendRequest request : friends) {
-                                    Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
-                                    tasks.add(task);
-                                    task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                DocumentSnapshot document = task.getResult();
-                                                if (document.exists()) {
-                                                    User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
-                                                    users.add(user);
-                                                    Log.w(TAG, "this is the current user:" + user.getName());
+                                    if(request.getFrom().equals(userId)){
+                                        Task<DocumentSnapshot> task = usersRef.document(request.getTo()).get();
+                                        tasks.add(task);
+                                        task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                                                        users.add(user);
+                                                        Log.w(TAG, "this is the current user:" + user.getName());
+                                                    }
                                                 }
                                             }
-                                        }
-                                    });
+                                        });
+                                    }
+                                    else{
+                                        Task<DocumentSnapshot> task = usersRef.document(request.getFrom()).get();
+                                        tasks.add(task);
+                                        task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                                                        users.add(user);
+                                                        Log.w(TAG, "this is the current user:" + user.getName());
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+
                                 }
 
                                 Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {

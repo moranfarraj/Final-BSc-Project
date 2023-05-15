@@ -23,6 +23,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
     ImageButton accept_btn;
     ImageButton decline_btn;
     ImageButton delete_btn;
+    ImageButton chat_btn;
     CollectionReference friendsRef;
     FirebaseFirestore db;
     FriendsAdapter adapter;
@@ -44,6 +45,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
         accept_btn = itemView.findViewById(R.id.accept_button);
         decline_btn = itemView.findViewById(R.id.decline_button);
         delete_btn = itemView.findViewById(R.id.delete_button);
+        chat_btn = itemView.findViewById(R.id.chat_button);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +59,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
             }
         });
         if (tabPosition == 0) {
+            chat_btn.setVisibility(View.VISIBLE);
             accept_btn.setVisibility(View.GONE);
             decline_btn.setVisibility(View.GONE);
             delete_btn.setVisibility(View.GONE);
@@ -64,10 +67,12 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
             accept_btn.setVisibility(View.VISIBLE);
             decline_btn.setVisibility(View.VISIBLE);
             delete_btn.setVisibility(View.GONE);
+            chat_btn.setVisibility(View.GONE);
         } else if (tabPosition == 2) {
             accept_btn.setVisibility(View.GONE);
             decline_btn.setVisibility(View.GONE);
             delete_btn.setVisibility(View.VISIBLE);
+            chat_btn.setVisibility(View.GONE);
         }
             accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,21 +156,14 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                             });
                 }
             });
-//        accept_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int position = getAdapterPosition();
-//                Log.w(TAG,"This is accept button:"+users.get(position).getId());
-//            }
-//        });
-//
-//        decline_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int position = getAdapterPosition();
-//                Log.w(TAG,"This is decline button"+users.get(position).getId());
-//            }
-//        });
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = getAdapterPosition();
+                Log.w(TAG, "This is the chat button:" + users.get(position).getId());
+
+            }
+        });
 
         }
     }

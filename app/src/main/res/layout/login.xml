@@ -1,44 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:gravity="center_horizontal"
-              android:padding="16dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_launcher_foreground">
 
-    <TextView
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:id="@+id/login_layout"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="24sp"
-            android:textColor="#000000"/>
+            android:layout_centerInParent="true"
+            android:background="@drawable/border"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp">
 
-    <EditText
-            android:id="@+id/username_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username"
-            android:inputType="text"
-            android:maxLines="1" android:minHeight="48dp"/>
-    <EditText
-            android:id="@+id/password_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:maxLines="1" android:minHeight="48dp"/>
-    <Button
-            android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="login"
-            android:onClick="loginButton"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="24sp"
+                android:textColor="#000000"/>
+
+        <EditText
+                android:id="@+id/username_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp"/>
+
+        <EditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:minHeight="48dp"/>
+
+        <Button
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="login"
+                android:textColor="#FFFFFF"
+                android:layout_margin="5dp"
+                android:onClick="loginButton"/>
+
+    </LinearLayout>
+
     <Button
             android:id="@+id/signup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="Signup"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_background"
+            android:textColor="#FFFFFF"
+            android:text="Don't have an account yet? Signup"
             android:onClick="onButtonClick"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="16dp">
+              android:padding="16dp"
+              android:background="@color/light_gray">
 
     <TextView
             android:layout_width="match_parent"
@@ -12,83 +14,142 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-    <EditText
-            android:id="@+id/editTextUsername"
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
-            android:inputType="text" />
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
 
-    <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword" />
-
-    <EditText
-            android:id="@+id/editTextConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirm Password"
-            android:inputType="textPassword" />
-
-    <RadioGroup
-            android:id="@+id/radioGroupGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <RadioButton
-                android:id="@+id/radioButtonMale"
-                android:layout_width="wrap_content"
+        <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Male" />
+                android:hint="Username"
+                android:inputType="text" />
+    </androidx.cardview.widget.CardView>
 
-        <RadioButton
-                android:id="@+id/radioButtonFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Female" />
-
-        <RadioButton
-                android:id="@+id/radioButtonOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Other" />
-    </RadioGroup>
-
-    <Spinner
-            android:id="@+id/spinner_countries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    <EditText
-            android:id="@+id/editTextDateOfBirth"
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date of Birth (MM/DD/YYYY)"
-            android:inputType="date" />
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
+
+        <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Wrap the rest of your elements similarly... -->
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
+
+        <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:inputType="textPassword" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
+
+        <RadioGroup
+                android:id="@+id/radioGroupGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male" />
+
+            <RadioButton
+                    android:id="@+id/radioButtonFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+
+            <RadioButton
+                    android:id="@+id/radioButtonOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other" />
+        </RadioGroup>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
+
+        <Spinner
+                android:id="@+id/spinner_countries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#D3D3D3">
+
+        <EditText
+                android:id="@+id/editTextDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Birth (MM/DD/YYYY)"
+                android:inputType="date" />
+    </androidx.cardview.widget.CardView>
 
     <Button
             android:id="@+id/buttonSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            android:onClick="SignupButton"/>
+            android:onClick="SignupButton"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"/>
 
     <Button
             android:id="@+id/backToLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:onClick="backToLogin"/>
+            android:onClick="backToLogin"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"/>
+
     <Button
             android:id="@+id/getting_Started_Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Next"
             android:onClick="gettingStartedButton"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"/>
 
 </LinearLayout>

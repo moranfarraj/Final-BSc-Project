@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 
@@ -36,6 +37,7 @@ public class SearchFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private FirebaseFirestore db;
+    CollectionReference friendsRef;
     private User currUser;
     private String userId;
     private String selectedCountry;
@@ -67,6 +69,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
+        friendsRef = db.collection("friendRequests");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_USER_ID);
@@ -126,6 +129,8 @@ public class SearchFragment extends Fragment {
     }
 
     public void SearchTeammate(View v){
+        RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false));
         String gender ="";
         RadioButton mRadio = v.findViewById(R.id.radioButtonMale);
         RadioButton fRadio = v.findViewById(R.id.radioButtonFemale);
@@ -159,15 +164,42 @@ public class SearchFragment extends Fragment {
                     QuerySnapshot querySnapshot = task.getResult();
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();
                     for (DocumentSnapshot document : documents) {
-                        User user = new User(document.getId(),document.get("username").toString(),document.get("gender").toString(),document.get("country").toString());
-                        users.add(user);
+                        User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                        if (!user.getId().equals(userId)) {
+                            // check if the document with from = userId and to = user.getId() OR from = user.getId() and to = userId exists in the collection friendsRef
+                            friendsRef.whereEqualTo("from", userId).whereEqualTo("to", user.getId())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            if (!queryDocumentSnapshots.isEmpty()) {
+                                                // document with from = userId and to = user.getId() exists
+                                            } else {
+                                                // document with from = userId and to = user.getId() doesn't exist, check the opposite
+                                                friendsRef.whereEqualTo("from", user.getId()).whereEqualTo("to", userId)
+                                                        .get()
+                                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                if (!queryDocumentSnapshots.isEmpty()) {
+                                                                    // document with from = user.getId() and to = userId exists
+                                                                } else {
+                                                                    Log.w(TAG, "User:" + user.getId());
+                                                                    users.add(user);
+                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
+                                                                    recyclerView.setAdapter(adapter);
+                                                                    adapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        }
+                                    });
+                        }
                     }
-                    RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false));
                     RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 } else {
                     // Handle any errors
                     Log.w(TAG, "Error getting documents.", task.getException());

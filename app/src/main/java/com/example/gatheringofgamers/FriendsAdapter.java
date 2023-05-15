@@ -49,7 +49,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     @NotNull
     @Override
     public FriendsViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        FriendsViewHolder friendsViewHolder=  new FriendsViewHolder(LayoutInflater.from(context).inflate(R.layout.friendlist_view,parent,false),friendsList);
+        FriendsViewHolder friendsViewHolder=  new FriendsViewHolder(LayoutInflater.from(context).inflate(R.layout.friendlist_view,parent,false),friendsList,tabPosition,currUser,this);
         return friendsViewHolder;
     }
 
@@ -70,63 +70,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
                 mListener.onItemClick(position1,friendsList.get(position1));
             }
         });
-//        //FIX if tabPosition==0 which are friends its not right!
-//        if(tabPosition==0){
-//            query = usersRef.whereEqualTo(FieldPath.documentId(),friendsList.get(position).getFrom());
-//        }
-//        else if(tabPosition==1){
-//            query = usersRef.whereEqualTo(FieldPath.documentId(),friendsList.get(position).getFrom());
-//        }
-//        else if(tabPosition==2){
-//            query = usersRef.whereEqualTo(FieldPath.documentId(),friendsList.get(position).getTo());
-//        }
-//        else{
-//            query = usersRef.whereEqualTo("none", "none");
-//        }
-//
-//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    QuerySnapshot querySnapshot = task.getResult();
-//                    if(querySnapshot.getDocuments().isEmpty()){
-//                        holder.nameView.setText("Empty List");
-//                    }
-//                    else{
-//                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-//                            User user = new User(document.getId(),document.get("username").toString(),document.get("gender").toString(),document.get("location").toString());
-//                            users.add(user);
-//                    }
-////                    DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-////                    userId = document.getId();
-////                    holder.nameView.setText(document.get("username").toString());
-//
-//                }
-//            }
-//        });
-//        if(!users.isEmpty()) {
-//            holder.nameView.setText(users.get(position).getName());
-//        }
-//        holder.nameView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String username = holder.nameView.getText().toString();
-//                // Call function with the username parameter
-//                goToUserProfile(userId);
-//            }
-//        });
+
     }
 
     @Override
     public int getItemCount() {
         return friendsList.size();
     }
-//    public void goToUserProfile(String ID){
-//        Log.w(TAG,"go to profile:"+ID);
-//        Intent intent = new Intent(context,UserProfileActivity.class);
-//        intent.putExtra("userID",ID);
-//        context.startActivity(intent);
-//    }
+
     public interface OnItemClickListener {
         void onItemClick(int position,User user);
     }

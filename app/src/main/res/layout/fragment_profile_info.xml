@@ -1,70 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp">
-    <TextView
-              android:id="@+id/test"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Gender:"/>
-    <RadioGroup
-            android:id="@+id/radioGroupGender"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <RadioButton
-                android:id="@+id/radioButtonMale"
+        <TextView
+                android:id="@+id/test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="Male"/>
+                android:text="Gender:"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"/>
 
-        <RadioButton
-                android:id="@+id/radioButtonFemale"
+        <RadioGroup
+                android:id="@+id/radioGroupGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+            <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:enabled="false"/>
+
+            <RadioButton
+                    android:id="@+id/radioButtonFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:enabled="false"/>
+
+            <RadioButton
+                    android:id="@+id/radioButtonOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:enabled="false"/>
+        </RadioGroup>
+
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="Female" />
+                android:text="Location:"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"/>
 
-        <RadioButton
-                android:id="@+id/radioButtonOther"
+        <Spinner
+                android:id="@+id/spinner_countries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Date Of Birth:"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"/>
+
+        <EditText
+                android:id="@+id/editTextDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Birth (MM/DD/YYYY)"
+                android:inputType="date"
                 android:enabled="false"
-                android:text="Other" />
-    </RadioGroup>
+                android:layout_marginTop="10dp"/>
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Location:"/>
-    <Spinner
-            android:id="@+id/spinner_countries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"/>
+        <Button
+                android:id="@+id/editProfileButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="12dp"
+                android:background="#3F51B5"
+                android:textColor="#FFF"/>
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Date Of Birth:"/>
+    </LinearLayout>
 
-    <EditText
-            android:id="@+id/editTextDateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:hint="Date of Birth (MM/DD/YYYY)"
-            android:enabled="false"
-            android:inputType="date" />
-    <Button
-            android:id="@+id/editProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:layout_below="@id/tableLayout"
-            android:layout_centerHorizontal="true"
-            android:onClick="editProfile"/>
-
-</LinearLayout>
+</ScrollView>

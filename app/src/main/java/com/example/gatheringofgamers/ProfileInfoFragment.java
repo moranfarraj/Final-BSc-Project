@@ -64,13 +64,17 @@ public class ProfileInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_info, container, false);
-        Button editProfileButton =view.findViewById(R.id.editProfileButton);
+        Button editProfileButton = view.findViewById(R.id.editProfileButton);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editProfile(view);
             }
         });
+
+        // Initialize and disable the countrySpinner here
+        countrySpinner = view.findViewById(R.id.spinner_countries);
+        countrySpinner.setEnabled(false);
 
         DocumentReference usersRef = db.collection("users").document(userId);
         usersRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -157,11 +161,10 @@ public class ProfileInfoFragment extends Fragment {
         if(button.getText().equals("Edit Profile")){
 
             mRadio.setEnabled(true);
-
             fRadio.setEnabled(true);
-
             oRadio.setEnabled(true);
             dateText.setEnabled(true);
+            countrySpinner.setEnabled(true); // Enable the countrySpinner
             button.setText("Save Changes");
         }
         else if(button.getText().equals("Save Changes")){
@@ -173,10 +176,12 @@ public class ProfileInfoFragment extends Fragment {
             if(oRadio.isChecked())
                 gender="Other";
             String dateOfBirth = dateText.getText().toString();
+            String selectedCountry = countrySpinner.getSelectedItem().toString(); // Get the selected country
             DocumentReference usersRef = db.collection("users").document(userId);
             Map<String, Object> updates = new HashMap<>();
             updates.put("gender", gender);
             updates.put("dateOfBirth", dateOfBirth);
+            updates.put("country", selectedCountry); // Add the country to Firestore
 
             usersRef.update(updates)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -195,9 +200,10 @@ public class ProfileInfoFragment extends Fragment {
             fRadio.setEnabled(false);
             oRadio.setEnabled(false);
             dateText.setEnabled(false);
+            countrySpinner.setEnabled(false); // Disable the countrySpinner again
             button.setText("Edit Profile");
         }
+    }
 
-        }
     }
 

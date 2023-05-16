@@ -58,38 +58,6 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose Age:"
-            android:textSize="15dp"
-            android:textStyle="bold"/>
-    <SeekBar
-            android:id="@+id/age_selector_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"/>
-
-        <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"/>
-    </LinearLayout>
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="Choose Game:"
             android:textStyle="bold"/>
 
@@ -109,14 +77,4 @@
             android:textColor="#FFF"
             android:text="Search" />
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/user_list_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center"
-            android:layout_marginEnd="32dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"/>
 </LinearLayout>

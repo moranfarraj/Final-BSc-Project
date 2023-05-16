@@ -49,6 +49,7 @@ public class SearchFragment extends Fragment {
     private User currUser;
     private String userId;
     private String selectedCountry;
+    private String selectedGame;
     private List<String> mCountryList;
     private List<String> gamesList;
     private ArrayAdapter<String> mCountryAdapter;
@@ -137,8 +138,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get selected country
-                String selectedGame = parent.getItemAtPosition(position).toString();
-                Toast.makeText(view.getContext(), "Selected game: " + selectedGame, Toast.LENGTH_SHORT).show();
+                selectedGame = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -152,7 +152,6 @@ public class SearchFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get selected country
                 selectedCountry = parent.getItemAtPosition(position).toString();
-                Toast.makeText(view.getContext(), "Selected country: " + selectedCountry, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -173,8 +172,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void SearchTeammate(View v){
-        RecyclerView recyclerView = v.findViewById(R.id.user_list_recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false));
         String gender ="";
         RadioButton mRadio = v.findViewById(R.id.radioButtonMale);
         RadioButton fRadio = v.findViewById(R.id.radioButtonFemale);

@@ -36,8 +36,6 @@ public class mainPageActivity extends AppCompatActivity {
         adapter.addFragment(ProfileFragment.newInstance(userID), "Profile");
         adapter.addFragment(SearchFragment.newInstance(userID), "Match Allies");
         adapter.addFragment(FriendsFragment.newInstance(userID),"Allies");
-        adapter.addFragment(ChatFragment.newInstance(userID),"Chats");
-
 
         viewPager.setAdapter(adapter);
 

@@ -1,5 +1,6 @@
 package com.example.gatheringofgamers;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
-
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +62,33 @@ public class ProfileInfoFragment extends Fragment {
         }
 
     }
+    public int calculateAge(String birthDate) {
+        DateTimeFormatter formatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        }
+        // Convert the birthDate string to a LocalDate
+        LocalDate localBirthDate = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            localBirthDate = LocalDate.parse(birthDate, formatter);
+        }
+        // Get the current date
+        LocalDate now = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            now = LocalDate.now();
+        }
+        // Calculate the period between the two dates
+        Period period = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            period = Period.between(localBirthDate, now);
+        }
+        // Return the years part of the period
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return period.getYears();
+        } else {
+            return -1;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +115,8 @@ public class ProfileInfoFragment extends Fragment {
                     String userGender = documentSnapshot.getString("gender");
                     String userBirthDate = documentSnapshot.getString("dateOfBirth");
                     String userCountry = documentSnapshot.getString("country");
-                    TextView gender = view.findViewById(R.id.test);
+                    TextView ageTextView = view.findViewById(R.id.age_text);
+                    int age = calculateAge(userBirthDate);
 
                     if(userGender.equals("Male")){
                         genderRadio = view.findViewById(R.id.radioButtonMale);
@@ -100,6 +131,8 @@ public class ProfileInfoFragment extends Fragment {
                     else{
 
                     }
+                    ageTextView.setText("Age: "+String.valueOf(age));
+                    TextView gender = view.findViewById(R.id.test);
                     dateText = view.findViewById(R.id.editTextDateOfBirth);
                     dateText.setText(userBirthDate);
                     countrySpinner = view.findViewById(R.id.spinner_countries);

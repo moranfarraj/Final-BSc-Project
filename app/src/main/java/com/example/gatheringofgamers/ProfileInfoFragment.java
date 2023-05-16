@@ -1,5 +1,6 @@
 package com.example.gatheringofgamers;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
-
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,18 +62,49 @@ public class ProfileInfoFragment extends Fragment {
         }
 
     }
+    public int calculateAge(String birthDate) {
+        DateTimeFormatter formatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        }
+        // Convert the birthDate string to a LocalDate
+        LocalDate localBirthDate = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            localBirthDate = LocalDate.parse(birthDate, formatter);
+        }
+        // Get the current date
+        LocalDate now = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            now = LocalDate.now();
+        }
+        // Calculate the period between the two dates
+        Period period = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            period = Period.between(localBirthDate, now);
+        }
+        // Return the years part of the period
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return period.getYears();
+        } else {
+            return -1;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_info, container, false);
-        Button editProfileButton =view.findViewById(R.id.editProfileButton);
+        Button editProfileButton = view.findViewById(R.id.editProfileButton);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editProfile(view);
             }
         });
+
+        // Initialize and disable the countrySpinner here
+        countrySpinner = view.findViewById(R.id.spinner_countries);
+        countrySpinner.setEnabled(false);
 
         DocumentReference usersRef = db.collection("users").document(userId);
         usersRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -81,7 +115,8 @@ public class ProfileInfoFragment extends Fragment {
                     String userGender = documentSnapshot.getString("gender");
                     String userBirthDate = documentSnapshot.getString("dateOfBirth");
                     String userCountry = documentSnapshot.getString("country");
-                    TextView gender = view.findViewById(R.id.test);
+                    TextView ageTextView = view.findViewById(R.id.age_text);
+                    int age = calculateAge(userBirthDate);
 
                     if(userGender.equals("Male")){
                         genderRadio = view.findViewById(R.id.radioButtonMale);
@@ -96,6 +131,8 @@ public class ProfileInfoFragment extends Fragment {
                     else{
 
                     }
+                    ageTextView.setText("Age: "+String.valueOf(age));
+                    TextView gender = view.findViewById(R.id.test);
                     dateText = view.findViewById(R.id.editTextDateOfBirth);
                     dateText.setText(userBirthDate);
                     countrySpinner = view.findViewById(R.id.spinner_countries);
@@ -157,11 +194,10 @@ public class ProfileInfoFragment extends Fragment {
         if(button.getText().equals("Edit Profile")){
 
             mRadio.setEnabled(true);
-
             fRadio.setEnabled(true);
-
             oRadio.setEnabled(true);
             dateText.setEnabled(true);
+            countrySpinner.setEnabled(true); // Enable the countrySpinner
             button.setText("Save Changes");
         }
         else if(button.getText().equals("Save Changes")){
@@ -173,10 +209,12 @@ public class ProfileInfoFragment extends Fragment {
             if(oRadio.isChecked())
                 gender="Other";
             String dateOfBirth = dateText.getText().toString();
+            String selectedCountry = countrySpinner.getSelectedItem().toString(); // Get the selected country
             DocumentReference usersRef = db.collection("users").document(userId);
             Map<String, Object> updates = new HashMap<>();
             updates.put("gender", gender);
             updates.put("dateOfBirth", dateOfBirth);
+            updates.put("country", selectedCountry); // Add the country to Firestore
 
             usersRef.update(updates)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -195,9 +233,10 @@ public class ProfileInfoFragment extends Fragment {
             fRadio.setEnabled(false);
             oRadio.setEnabled(false);
             dateText.setEnabled(false);
+            countrySpinner.setEnabled(false); // Disable the countrySpinner again
             button.setText("Edit Profile");
         }
+    }
 
-        }
     }
 

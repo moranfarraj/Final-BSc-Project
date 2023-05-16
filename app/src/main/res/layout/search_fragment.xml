@@ -102,8 +102,12 @@
             android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:onClick="SignupButton"/>
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:background="#3F51B5"
+            android:textColor="#FFF"
+            android:text="Search" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_list_recycler"

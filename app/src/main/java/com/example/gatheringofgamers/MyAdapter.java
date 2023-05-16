@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,9 +59,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         userGamesRef = db.collection("userGames");
         gamesRef = db.collection("games");
         List<userGames> userGamesList = new ArrayList<>();
-        holder.nameView.setText("Name:"+users.get(position).getName());
-        holder.genderView.setText("Gender:"+users.get(position).getGender());
-        holder.locationView.setText("Location:"+users.get(position).getLocation());
+        holder.nameView.setText(users.get(position).getName());
+        holder.genderView.setText(users.get(position).getGender());
+        holder.locationView.setText(users.get(position).getLocation());
         addTeammateBut = holder.addTeammate;
         addTeammateBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +127,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.w(TAG,"Successfully added user"+teammateId);
+                        Toast.makeText(v.getContext(), "Successfully added user!", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

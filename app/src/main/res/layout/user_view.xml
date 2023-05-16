@@ -10,46 +10,89 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_launcher_background" />
-    <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:textSize="30dp"
+            android:text="Name:"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
         <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-            <TextView
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/name"
+                android:orientation="horizontal">
+            <LinearLayout
                     android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Name:"/>
-            <TextView
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gender:"/>
+                    android:gravity="left">
 
-            <TextView
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location:"/>
+                <ImageView
+                        android:id="@+id/gender_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        android:text="Accept"
+                        android:textAllCaps="false"/>
 
-            <TextView
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age: 24"/>
+                <TextView
+                        android:id="@+id/gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Gender"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_weight="1"
+                          android:layout_height="wrap_content"
+                          android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/location_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_menu_mapmode"
+                        android:text="Accept"
+                        android:textAllCaps="false"/>
+
+                <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp"
+                        android:text="Location"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_weight="1"
+                          android:layout_height="wrap_content"
+                          android:gravity="right">
+
+                <ImageView
+                        android:id="@+id/age_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_menu_day"
+                        android:text="Accept"
+                        android:textAllCaps="false"
+                        android:textSize="14sp" />
+
+                <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="24"/>
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
             <ListView
                     android:id="@+id/gamesListView"
                     android:layout_width="match_parent"
@@ -63,7 +106,6 @@
                     android:layout_marginEnd="8dp"/>
         </LinearLayout>
 
-    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"

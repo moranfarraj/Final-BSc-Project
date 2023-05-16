@@ -1,6 +1,8 @@
 package com.example.gatheringofgamers;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.*;
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -197,13 +200,18 @@ public class SearchFragment extends Fragment {
         }
 
 // Execute the query
+
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            int count = 0;
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+
                     List<User> users = new ArrayList<>();
                     QuerySnapshot querySnapshot = task.getResult();
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    int totalUsers = documents.size();
+                    Log.w(TAG,"total users:"+totalUsers);
                     for (DocumentSnapshot document : documents) {
                         User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
                         if (!user.getId().equals(userId)) {
@@ -214,7 +222,7 @@ public class SearchFragment extends Fragment {
                                         @Override
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                             if (!queryDocumentSnapshots.isEmpty()) {
-                                                // document with from = userId and to = user.getId() exists
+                                                count++;
                                             } else {
                                                 // document with from = userId and to = user.getId() doesn't exist, check the opposite
                                                 friendsRef.whereEqualTo("from", user.getId()).whereEqualTo("to", userId)
@@ -227,20 +235,41 @@ public class SearchFragment extends Fragment {
                                                                 } else {
                                                                     Log.w(TAG, "User:" + user.getId());
                                                                     users.add(user);
-                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
-                                                                    recyclerView.setAdapter(adapter);
-                                                                    adapter.notifyDataSetChanged();
+//                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
+//                                                                    recyclerView.setAdapter(adapter);
+//                                                                    adapter.notifyDataSetChanged();
                                                                 }
+                                                                count++;
+                                                                if(count == totalUsers){
+                                                                    List<User> userList = new ArrayList<>();
+                                                                    for(User user : users){
+                                                                        userList.add(user);
+                                                                    }
+                                                                    Intent intent = new Intent(v.getContext(), SearchedUsersActivity.class);
+                                                                    intent.putExtra("userList", (Serializable) userList);
+                                                                    startActivity(intent);
+                                                                }
+
                                                             }
                                                         });
                                             }
                                         }
                                     });
                         }
+                        else {
+                            count++;
+                        }
                     }
-                    RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    if(count==totalUsers) {
+                        Log.w(TAG, "users size sent:" + users.size());
+                        List<User> userList = new ArrayList<>();
+                        Intent intent = new Intent(v.getContext(), SearchedUsersActivity.class);
+                        intent.putExtra("userList", (Serializable) userList);
+                        startActivity(intent);
+                    }
+//                    RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
+//                    recyclerView.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
                 } else {
                     // Handle any errors
                     Log.w(TAG, "Error getting documents.", task.getException());

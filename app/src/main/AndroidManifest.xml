@@ -30,6 +30,7 @@
         <activity android:name=".mainPageActivity"></activity>
         <activity android:name=".gettingStartedActivity"></activity>
         <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".SearchedUsersActivity"></activity>
     </application>
 
 

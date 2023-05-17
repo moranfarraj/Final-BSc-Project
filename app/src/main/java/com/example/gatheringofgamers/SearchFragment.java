@@ -166,6 +166,13 @@ public class SearchFragment extends Fragment {
                 SearchTeammate(view);
             }
         });
+        CheckBox locationPreferenceBut = view.findViewById(R.id.radioButtonNoPreference);
+        locationPreferenceBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeLocationPreference(view);
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -176,6 +183,8 @@ public class SearchFragment extends Fragment {
         RadioButton mRadio = v.findViewById(R.id.radioButtonMale);
         RadioButton fRadio = v.findViewById(R.id.radioButtonFemale);
         RadioButton oRadio = v.findViewById(R.id.radioButtonOther);
+        CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
+
         if(mRadio.isChecked())
             gender = "Male";
         else if (fRadio.isChecked())
@@ -186,15 +195,23 @@ public class SearchFragment extends Fragment {
             gender="All";
 
         Query query;
-        if(!gender.equals("All")){
+        if(!gender.equals("All") && locationPreference.isChecked()){
+            query = db.collection("users")
+                    .whereEqualTo("gender", gender);
+        }
+        else if(!gender.equals("All") && !locationPreference.isChecked()){
             query = db.collection("users")
                     .whereEqualTo("gender", gender)
                     .whereEqualTo("country", selectedCountry);
         }
-        else {
+        else if(gender.equals("All") && !locationPreference.isChecked()){
             query = db.collection("users")
                     .whereEqualTo("country", selectedCountry);
         }
+        else{
+            query = db.collection("users");
+        }
+
 
 // Execute the query
 
@@ -274,6 +291,17 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+    }
+    public void ChangeLocationPreference(View v){
+        Spinner mSpinnerCountries = v.findViewById(R.id.spinner_countries);
+        CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
+        if(locationPreference.isChecked()) {
+            mSpinnerCountries.setEnabled(false);
+        }
+        else{
+            mSpinnerCountries.setEnabled(true);
+
+        }
     }
 }
 

@@ -244,6 +244,7 @@ public class SearchFragment extends Fragment {
                                                                     }
                                                                     Intent intent = new Intent(v.getContext(), SearchedUsersActivity.class);
                                                                     intent.putExtra("userList", (Serializable) userList);
+                                                                    intent.putExtra("userID",userId);
                                                                     startActivity(intent);
                                                                 }
 

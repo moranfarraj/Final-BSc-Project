@@ -132,6 +132,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                         });
             }
         });
+
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

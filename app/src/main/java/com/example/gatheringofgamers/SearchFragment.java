@@ -198,6 +198,7 @@ public class SearchFragment extends Fragment {
 
 // Execute the query
 
+
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             int count = 0;
             @Override

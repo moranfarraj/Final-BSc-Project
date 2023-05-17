@@ -75,6 +75,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
 
     }
 
+
     @Override
     public int getItemCount() {
         return friendsList.size();

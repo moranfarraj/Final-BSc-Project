@@ -63,7 +63,6 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-
         DocumentReference usersRef = db.collection("users").document(userId);
         usersRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -92,7 +91,7 @@ public class UserProfileFragment extends Fragment {
                     dateText = view.findViewById(R.id.editTextDateOfBirth);
                     dateText.setText(userBirthDate);
                     countrySpinner = view.findViewById(R.id.spinner_countries);
-                    countrySpinner.setClickable(false);
+                    countrySpinner.setEnabled(false);
                     CountryList = new ArrayList<>();
                     adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, CountryList);
                     countrySpinner.setAdapter(adapter);

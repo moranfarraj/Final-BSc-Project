@@ -27,6 +27,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     List<FriendRequest> friendRequestsReceived;
     List<FriendRequest> friends;
     List<User>friendsList;
+    private ViewHolderCallback callback;
     List<User> users;
     private OnItemClickListener mListener;
 
@@ -37,7 +38,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     String userId;
     CollectionReference friendsRef;
 
-    public FriendsAdapter(Context context, List<User> friendsList, String user,int tabPosition,OnItemClickListener listener){
+    public FriendsAdapter(Context context, List<User> friendsList, String user, int tabPosition, OnItemClickListener listener, ViewHolderCallback callBack){
+        this.callback=callBack;
         this.context = context;
         this.friendsList = friendsList;
         this.currUser = user;
@@ -49,7 +51,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     @NotNull
     @Override
     public FriendsViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        FriendsViewHolder friendsViewHolder=  new FriendsViewHolder(LayoutInflater.from(context).inflate(R.layout.friendlist_view,parent,false),friendsList,tabPosition,currUser,this);
+        FriendsViewHolder friendsViewHolder=  new FriendsViewHolder(LayoutInflater.from(context).inflate(R.layout.friendlist_view,parent,false),friendsList,tabPosition,currUser,this,callback);
         return friendsViewHolder;
     }
 
@@ -81,6 +83,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     public interface OnItemClickListener {
         void onItemClick(int position,User user);
     }
+    public interface ViewHolderCallback {
+        void onFunctionCall(int position);
+    }
+
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;

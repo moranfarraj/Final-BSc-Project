@@ -2,6 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
     ImageButton decline_btn;
     ImageButton delete_btn;
     ImageButton chat_btn;
+    private FriendsAdapter.ViewHolderCallback callback;
     CollectionReference friendsRef;
     FirebaseFirestore db;
     FriendsAdapter adapter;
@@ -33,8 +35,9 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
     private FriendsAdapter.OnItemClickListener mListener;
     RecyclerView friendsList;
 
-    public FriendsViewHolder(View itemView, List<User> users,int tabPosition,String userId,FriendsAdapter adapter) {
+    public FriendsViewHolder(View itemView, List<User> users, int tabPosition, String userId, FriendsAdapter adapter, FriendsAdapter.ViewHolderCallback callback) {
         super(itemView);
+        this.callback=callback;
         db = FirebaseFirestore.getInstance();
         friendsRef = db.collection("friendRequests");
         this.tabPosition = tabPosition;
@@ -88,6 +91,9 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                                     Log.w(TAG,document.getId());
                                     friendsRef.document(document.getId()).update("status", "friends");
                                     Toast.makeText(itemView.getContext(), "Ally Added!", Toast.LENGTH_SHORT).show();
+                                    callback.onFunctionCall(1);
+                                    callback.onFunctionCall(0);
+                                    adapter.notifyDataSetChanged();
 
                                 }
                             }
@@ -112,6 +118,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     Toast.makeText(itemView.getContext(), "Friend Request Declined!", Toast.LENGTH_SHORT).show();
+                                                    callback.onFunctionCall(1);
                                                     adapter.notifyDataSetChanged();
                                                 }
                                             }) .addOnFailureListener(new OnFailureListener() {
@@ -142,7 +149,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     Toast.makeText(itemView.getContext(), "Friend Request Deleted!", Toast.LENGTH_SHORT).show();
-
+                                                    callback.onFunctionCall(2);
                                                     adapter.notifyDataSetChanged();
                                                 }
                                             }) .addOnFailureListener(new OnFailureListener() {

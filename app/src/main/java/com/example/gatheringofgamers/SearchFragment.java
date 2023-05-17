@@ -203,7 +203,6 @@ public class SearchFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
                     List<User> users = new ArrayList<>();
                     QuerySnapshot querySnapshot = task.getResult();
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();

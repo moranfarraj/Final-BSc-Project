@@ -1,5 +1,6 @@
 package com.example.gatheringofgamers;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,10 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -29,6 +27,9 @@ public class SignupActivity extends AppCompatActivity {
     private List<String> mCountryList;
     private ArrayAdapter<String> mCountryAdapter;
     private String tempUser;
+
+    private EditText dateOfBirthEditText;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,32 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
+        dateOfBirthEditText = findViewById(R.id.editTextDateOfBirth);
+        dateOfBirthEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        SignupActivity.this,
+                        mDateSetListener,
+                        year, month, day);
+                dialog.show();
+            }
+        });
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1; // Month is counted starting from 0 so we add 1
+                String monthString = month < 10 ? "0" + month : String.valueOf(month);
+                String dayString = day < 10 ? "0" + day : String.valueOf(day);
+                String date = monthString + "/" + dayString  + "/" + year;
+                dateOfBirthEditText.setText(date);
+            }
+        };
 
         // Set spinner item selected listener
         mSpinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

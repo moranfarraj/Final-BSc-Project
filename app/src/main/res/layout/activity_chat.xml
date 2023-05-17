@@ -10,9 +10,7 @@
             android:src="@android:drawable/ic_menu_revert"
             android:contentDescription="Back button"
             android:background="?android:selectableItemBackground"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_alignParentStart="true"/>
 
     <TextView
             android:id="@+id/chatUserName"
@@ -27,7 +25,12 @@
             android:id="@+id/chat_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/chatUserName" />
+            android:layout_below="@+id/chatUserName">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </FrameLayout>
 
     <RelativeLayout
             android:id="@+id/inputLayout"

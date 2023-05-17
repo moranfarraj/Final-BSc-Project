@@ -5,6 +5,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -12,10 +14,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatActivity extends AppCompatActivity {
     FirebaseFirestore db;
     CollectionReference usersRef;
     String username;
+    MessagesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +51,14 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+        List<String> messages = new ArrayList<>();
+        messages.add("Hello");
+        messages.add("are u here?");
+        messages.add("test");
+        RecyclerView recyclerView = findViewById(R.id.chatRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        adapter = new MessagesAdapter(messages,this);
+        recyclerView.setAdapter(adapter);
+
     }
 }

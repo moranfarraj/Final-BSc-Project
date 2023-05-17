@@ -55,12 +55,6 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_fragment_layout, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        List<Chat> chats = new ArrayList<>(); // Replace this with your actual chat data
-        ChatAdapter chatAdapter = new ChatAdapter(chats);
-        recyclerView.setAdapter(chatAdapter);
 
         return view;
     }

@@ -80,7 +80,6 @@ public class FriendsFragment extends Fragment implements FriendsAdapter.ViewHold
         setView(view);
         tabLayout = view.findViewById(R.id.friendList_layout);
         handleTabSelection(0,view);
-        preferences = requireContext().getSharedPreferences("MyPrefs", this.getContext().MODE_PRIVATE);
 
 //        Query query;
 //        query = db.collection("friendRequests")
@@ -114,45 +113,7 @@ public class FriendsFragment extends Fragment implements FriendsAdapter.ViewHold
                     });
         return view;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
 
-        int selectedTabPosition = preferences.getInt("SelectedTabPosition", 0);
-
-        // Set the TabLayout to display the first tab
-        tabLayout.selectTab(tabLayout.getTabAt(0));
-
-        // Update the selectedTabPosition variable if needed
-        selectedTabPosition = 0;
-
-        // Perform any necessary operations based on the selected tab
-
-        // Add listeners to handle tab selection events
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                if (tab.getPosition() == 0) {
-                    handleTabSelection(tab.getPosition(),view);
-                } else if (tab.getPosition() == 1) {
-                    handleTabSelection(tab.getPosition(),view);
-                } else if (tab.getPosition() == 2) {
-                    handleTabSelection(tab.getPosition(),view);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // Handle tab unselection events
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // Handle tab reselection events
-            }
-        });
-    }
     private void handleTabSelection(int position,View view) {
         // Perform actions based on the selected tab position
         if (position == 0) {

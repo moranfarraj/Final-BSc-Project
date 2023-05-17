@@ -1,5 +1,6 @@
 package com.example.gatheringofgamers;
 
+import android.content.Intent;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -168,8 +169,10 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View view) {
                 int position = getAdapterPosition();
-                Log.w(TAG, "This is the chat button:" + users.get(position).getId());
-
+                // Start the ChatActivity
+                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                intent.putExtra("userId", users.get(position).getId());
+                view.getContext().startActivity(intent);
             }
         });
 

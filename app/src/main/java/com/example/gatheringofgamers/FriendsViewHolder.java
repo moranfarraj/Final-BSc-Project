@@ -172,6 +172,7 @@ public class FriendsViewHolder extends RecyclerView.ViewHolder{
                 // Start the ChatActivity
                 Intent intent = new Intent(view.getContext(), ChatActivity.class);
                 intent.putExtra("userId", users.get(position).getId());
+                intent.putExtra("MyId",userId);
                 view.getContext().startActivity(intent);
             }
         });

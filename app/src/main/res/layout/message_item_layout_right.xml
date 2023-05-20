@@ -8,7 +8,9 @@
             android:id="@+id/messageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/background_chat_right"
             android:padding="15dp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
 </androidx.cardview.widget.CardView>

@@ -2,10 +2,13 @@ package com.example.gatheringofgamers;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Objects;
+
 public class User implements Serializable {
     public String name;
     public String password;
     public int age;
+
     public String gender;
     private String id;
     public String location;
@@ -76,6 +79,15 @@ public class User implements Serializable {
         this.gender = gender;
         this.location = location;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
 }
 
 

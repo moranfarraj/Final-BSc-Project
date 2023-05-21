@@ -25,7 +25,8 @@
             android:id="@+id/chat_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/chatUserName">
+            android:layout_below="@+id/chatUserName"
+            android:layout_above="@+id/inputLayout">
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chatRecyclerView"
                 android:layout_width="match_parent"

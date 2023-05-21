@@ -71,16 +71,144 @@
             android:id="@+id/game_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    <CheckBox
+            android:id="@+id/radioButtonNoPreferenceGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Game Preference" />
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/competitive_layout">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Competitive level"
+            android:textSize="16sp"
+            android:textColor="#000000"/>
 
-    <Button
-            android:id="@+id/search_button"
+
+    <SeekBar
+            android:id="@+id/competitive_level_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:padding="12dp"
-            android:background="#3F51B5"
-            android:textColor="#FFF"
-            android:text="Search" />
+            android:max="5"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Fun"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Competitive"/>
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/skill_layout">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skill Level"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp"/>
+
+    <SeekBar
+            android:id="@+id/level_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beginner"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Professional"/>
+
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/communication_layout">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Communication level"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:textColor="#000000"/>
+
+    <SeekBar
+            android:id="@+id/communication_level_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quiet"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Communicative"/>
+    </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_below="@+id/radioButtonNoPreferenceGame"
+                  android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+        <Button
+                android:id="@+id/search_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="12dp"
+                android:background="#3F51B5"
+                android:textColor="#FFF"
+                android:text="Search" />
+    </LinearLayout>
 
 </LinearLayout>

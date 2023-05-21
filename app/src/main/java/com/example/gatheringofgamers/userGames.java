@@ -31,16 +31,6 @@ public class userGames {
         this.gameId = gameId;
     }
 
-    @Override
-    public String toString() {
-        return "userGames{" +
-                "userId='" + userId + '\'' +
-                ", gameId='" + gameId + '\'' +
-                ", communicationLevel='" + communicationLevel + '\'' +
-                ", competitiveLevel='" + competitiveLevel + '\'' +
-                ", skillLevel='" + skillLevel + '\'' +
-                '}';
-    }
 
     public String getCommunicationLevel() {
         return communicationLevel;

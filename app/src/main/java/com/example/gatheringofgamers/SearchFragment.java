@@ -45,6 +45,8 @@ public class SearchFragment extends Fragment {
     CollectionReference gamesRef;
     ArrayList gameList;
     Spinner gamesSpinner;
+    List<Game> games;
+    List<userGames> userGamesList;
     ArrayAdapter<String> gamesAdapter;
     private User currUser;
     private String userId;
@@ -92,6 +94,8 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment,container,false);
         mCountryList = new ArrayList<>();
+        List<Game> games = new ArrayList<>();
+        userGamesList = new ArrayList<>();
         Spinner mSpinnerCountries = view.findViewById(R.id.spinner_countries);
         mCountryAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, mCountryList);
         mSpinnerCountries.setAdapter(mCountryAdapter);
@@ -123,8 +127,9 @@ public class SearchFragment extends Fragment {
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(DocumentSnapshot document : task.getResult().getDocuments()){
-                        String game = document.getString("name");
-                        gameList.add(game);
+                        Game game = new Game(document.getId(),document.get("name").toString());
+                        games.add(game);
+                        gameList.add(game.getName());
                     }
                     gamesAdapter.notifyDataSetChanged();
                 }
@@ -145,6 +150,16 @@ public class SearchFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        db.collection("userGames").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot document : task.getResult().getDocuments()){
+                    userGames userGame = new userGames(document.get("userId").toString(),document.get("gameId").toString(),document.get("communicationLevel").toString(),
+                            document.get("competitiveLevel").toString(),document.get("skillLevel").toString());
+                    userGamesList.add(userGame);
+                }
+            }
+        });
 
         // Set spinner item selected listener
         mSpinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -163,7 +178,7 @@ public class SearchFragment extends Fragment {
         searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchTeammate(view);
+                SearchTeammate(view,games,userGamesList);
             }
         });
         CheckBox locationPreferenceBut = view.findViewById(R.id.radioButtonNoPreference);
@@ -173,17 +188,39 @@ public class SearchFragment extends Fragment {
                 ChangeLocationPreference(view);
             }
         });
+        CheckBox gamePreferenceBut = view.findViewById(R.id.radioButtonNoPreferenceGame);
+        gamePreferenceBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeGamePreference(view);
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void SearchTeammate(View v){
+    public void SearchTeammate(View v,List<Game> games,List<userGames> userGamesList){
+        List<String> userGamesID = new ArrayList<>();
+        String selectedGameId="";
+        for(Game game : games){
+            if(game.getName().equals(selectedGame)){
+                selectedGameId = game.getId();
+            }
+        }
+        for(userGames userGame : userGamesList){
+            if(userGame.getGameId().equals(selectedGameId)){
+                userGamesID.add(userGame.getUserId());
+            }
+        }
+
         String gender ="";
         RadioButton mRadio = v.findViewById(R.id.radioButtonMale);
         RadioButton fRadio = v.findViewById(R.id.radioButtonFemale);
         RadioButton oRadio = v.findViewById(R.id.radioButtonOther);
         CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
+        CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
+
 
         if(mRadio.isChecked())
             gender = "Male";
@@ -248,7 +285,16 @@ public class SearchFragment extends Fragment {
                                                                     // document with from = user.getId() and to = userId exists
                                                                 } else {
                                                                     Log.w(TAG, "User:" + user.getId());
-                                                                    users.add(user);
+                                                                    if(!gamePreference.isChecked()) {
+                                                                        for (String tempID : userGamesID) {
+                                                                            if (user.getId().equals(tempID)) {
+                                                                                users.add(user);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    else{
+                                                                        users.add(user);
+                                                                    }
 //                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
 //                                                                    recyclerView.setAdapter(adapter);
 //                                                                    adapter.notifyDataSetChanged();
@@ -301,6 +347,25 @@ public class SearchFragment extends Fragment {
         else{
             mSpinnerCountries.setEnabled(true);
 
+        }
+    }
+    public void ChangeGamePreference(View v){
+        Spinner mSpinnerGames = v.findViewById(R.id.game_spinner);
+        CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
+        LinearLayout communicationLayout = v.findViewById(R.id.communication_layout);
+        LinearLayout skillLayout = v.findViewById(R.id.skill_layout);
+        LinearLayout competitiveLayout = v.findViewById(R.id.competitive_layout);
+        if(gamePreference.isChecked()) {
+            mSpinnerGames.setEnabled(false);
+            communicationLayout.setVisibility(View.GONE);
+            skillLayout.setVisibility(View.GONE);
+            competitiveLayout.setVisibility(View.GONE);
+        }
+        else{
+            mSpinnerGames.setEnabled(true);
+            communicationLayout.setVisibility(View.VISIBLE);
+            skillLayout.setVisibility(View.VISIBLE);
+            competitiveLayout.setVisibility(View.VISIBLE);
         }
     }
 }

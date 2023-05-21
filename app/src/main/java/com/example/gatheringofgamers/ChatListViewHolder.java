@@ -11,11 +11,14 @@ import org.w3c.dom.Text;
 public class ChatListViewHolder extends RecyclerView.ViewHolder {
     TextView username;
     ImageView profile_img;
+    TextView last_msg;
 
 
     public ChatListViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         username = itemView.findViewById(R.id.username);
         profile_img = itemView.findViewById(R.id.profile_image);
+        last_msg = itemView.findViewById(R.id.last_message);
     }
+
 }

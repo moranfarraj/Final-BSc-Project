@@ -81,10 +81,11 @@ public class ChatFragment extends Fragment {
                         usersRef.document(chat.getReceiver()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                User user = new User(documentSnapshot.getId(),documentSnapshot.get("username").toString(),documentSnapshot.get("gender").toString(),documentSnapshot.get("country").toString());
+                                String encodedImage = documentSnapshot.getString("image");
+                                User user = new User(documentSnapshot.getId(),documentSnapshot.get("username").toString(),documentSnapshot.get("gender").toString(),
+                                        documentSnapshot.get("country").toString(),encodedImage);
                                 users.add(user);
                                 count++;
-
                                 if(count == childrenCount){
                                     readChats(users);
                                 }
@@ -95,7 +96,9 @@ public class ChatFragment extends Fragment {
                         usersRef.document(chat.getSender()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                User user = new User(documentSnapshot.getId(),documentSnapshot.get("username").toString(),documentSnapshot.get("gender").toString(),documentSnapshot.get("country").toString());
+                                String encodedImage = documentSnapshot.getString("image");
+                                User user = new User(documentSnapshot.getId(),documentSnapshot.get("username").toString(),documentSnapshot.get("gender").toString(),
+                                        documentSnapshot.get("country").toString(),encodedImage);
                                 users.add(user);
                                 count++;
                                 if(count == childrenCount){

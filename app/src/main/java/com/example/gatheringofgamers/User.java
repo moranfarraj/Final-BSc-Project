@@ -8,6 +8,7 @@ public class User implements Serializable {
     public String name;
     public String password;
     public int age;
+    public String img;
 
     public String gender;
     private String id;
@@ -19,6 +20,14 @@ public class User implements Serializable {
         this.age = age;
         this.gender = gender;
         this.location = location;
+    }
+    public User(String id,String name, String gender, String location,String img) {
+        this.id =id ;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.location = location;
+        this.img = img;
     }
 
     public String getName() {
@@ -66,6 +75,14 @@ public class User implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public User() {

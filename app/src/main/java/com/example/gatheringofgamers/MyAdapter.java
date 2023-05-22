@@ -71,13 +71,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         gamesRef = db.collection("games");
         userGamesList = new ArrayList<>();
         holder.nameView.setText(users.get(position).getName());
-        if(users.get(position).getScore()>50) {
-            holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
-            holder.recommendationScore.setTextColor(Color.GREEN);
-        }
-        if(users.get(position).getScore()<=50) {
-            holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
-            holder.recommendationScore.setTextColor(Color.RED);
+        if(users.get(position).getScore()!=0) {
+            if (users.get(position).getScore() > 50) {
+                holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
+                holder.recommendationScore.setTextColor(Color.GREEN);
+            }
+            if (users.get(position).getScore() <= 50) {
+                holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
+                holder.recommendationScore.setTextColor(Color.RED);
+            }
         }
         holder.genderView.setText(users.get(position).getGender());
         holder.locationView.setText(users.get(position).getLocation());

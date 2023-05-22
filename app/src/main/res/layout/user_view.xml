@@ -9,16 +9,36 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_launcher_background" />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:layout_gravity="left">
+        <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/recommendation_score"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"/>
+    </LinearLayout>
     <TextView
             android:layout_marginTop="15dp"
             android:id="@+id/name"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textSize="30dp"
             android:text="Name:"/>
+    </LinearLayout>
+
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="3"
+                  android:layout_weight="1"
                   android:orientation="vertical">
         <LinearLayout
                 android:layout_width="match_parent"
@@ -111,6 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1">
 
             <Button

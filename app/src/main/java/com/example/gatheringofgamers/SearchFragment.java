@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static java.lang.Math.abs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -179,6 +180,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SearchTeammate(view,games,userGamesList);
+            }
+        });
+        Button recommendBut = view.findViewById(R.id.recommendation_button);
+        recommendBut.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                RecommendedTeammate(view,games,userGamesList);
             }
         });
         CheckBox locationPreferenceBut = view.findViewById(R.id.radioButtonNoPreference);
@@ -338,6 +346,129 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+    public void RecommendedTeammate(View view,List<Game> games,List<userGames> userGamesList) {
+        List<userGames> userGamesHelp= new ArrayList<>();
+        List<userGames> userGamesRecommended = new ArrayList<>();
+        String gameId = "";
+        userGames myGame = null;
+        for (Game game : games) {
+            if (selectedGame.equals(game.getName())) {
+                gameId = game.getId();
+            }
+        }
+
+        for (userGames userGame : userGamesList) {
+                if (userGame.getGameId().equals(gameId)) {
+                    Log.w(TAG,"test");
+                    if (userGame.getUserId().equals(userId)) {
+
+                        myGame = new userGames(userGame.getUserId(), userGame.getGameId(), userGame.getCommunicationLevel(), userGame.getCompetitiveLevel(), userGame.getSkillLevel());
+                    }
+                    else{
+                        userGamesRecommended.add(userGame);
+                    }
+                }
+        }
+        if(myGame == null){
+            Toast.makeText(view.getContext(), "You do not play this game!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            for (userGames userGame : userGamesRecommended) {
+                int competitiveLevel = Integer.parseInt(userGame.getCompetitiveLevel());
+                int myCompetitiveLevel = Integer.parseInt(myGame.getCompetitiveLevel());
+                int competitiveScore = (5 - abs(myCompetitiveLevel - competitiveLevel));
+                int skillLevel = Integer.parseInt(userGame.getSkillLevel());
+                int mySkillLevel = Integer.parseInt(myGame.getSkillLevel());
+                int skillScore = (5 - abs(mySkillLevel - skillLevel));
+                int communicationLevel = Integer.parseInt(userGame.getCommunicationLevel());
+                int myCommunicationLevel = Integer.parseInt(myGame.getCommunicationLevel());
+                int communicationScore = (5 - abs(myCommunicationLevel - communicationLevel));
+                double finalScore = (competitiveScore + skillScore + communicationScore) * (100/15);
+                userGame.setScore(finalScore);
+            }
+            db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                int count = 0;
+
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        List<User> users = new ArrayList<>();
+                        QuerySnapshot querySnapshot = task.getResult();
+                        List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                        int totalUsers = documents.size();
+                        Log.w(TAG, "total users:" + totalUsers);
+                        for (DocumentSnapshot document : documents) {
+                            User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                            if (!user.getId().equals(userId)) {
+                                // check if the document with from = userId and to = user.getId() OR from = user.getId() and to = userId exists in the collection friendsRef
+                                friendsRef.whereEqualTo("from", userId).whereEqualTo("to", user.getId())
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                if (!queryDocumentSnapshots.isEmpty()) {
+                                                    count++;
+                                                } else {
+                                                    // document with from = userId and to = user.getId() doesn't exist, check the opposite
+                                                    friendsRef.whereEqualTo("from", user.getId()).whereEqualTo("to", userId)
+                                                            .get()
+                                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                @Override
+                                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                                                        // document with from = user.getId() and to = userId exists
+                                                                    } else {
+                                                                        Log.w(TAG, "User:" + user.getId());
+                                                                        for (userGames temp : userGamesRecommended) {
+                                                                            if (user.getId().equals(temp.getUserId())) {
+                                                                                user.setScore(temp.getScore());
+                                                                                users.add(user);
+                                                                            }
+                                                                        }
+//                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
+//                                                                    recyclerView.setAdapter(adapter);
+//                                                                    adapter.notifyDataSetChanged();
+                                                                    }
+                                                                    count++;
+                                                                    if (count == totalUsers) {
+                                                                        List<User> userList = new ArrayList<>();
+                                                                        for (User user : users) {
+                                                                            userList.add(user);
+                                                                        }
+                                                                        Intent intent = new Intent(view.getContext(), SearchedUsersActivity.class);
+                                                                        intent.putExtra("userList", (Serializable) userList);
+                                                                        intent.putExtra("userID", userId);
+                                                                        startActivity(intent);
+                                                                    }
+
+                                                                }
+                                                            });
+                                                }
+                                            }
+                                        });
+                            } else {
+                                count++;
+                            }
+                        }
+                        if (count == totalUsers) {
+                            Log.w(TAG, "users size sent:" + users.size());
+                            List<User> userList = new ArrayList<>();
+                            Intent intent = new Intent(view.getContext(), SearchedUsersActivity.class);
+                            intent.putExtra("userList", (Serializable) userList);
+                            startActivity(intent);
+                        }
+//                    RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
+//                    recyclerView.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+                    } else {
+                        // Handle any errors
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                }
+            });
+        }
+    }
+
     public void ChangeLocationPreference(View v){
         Spinner mSpinnerCountries = v.findViewById(R.id.spinner_countries);
         CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);

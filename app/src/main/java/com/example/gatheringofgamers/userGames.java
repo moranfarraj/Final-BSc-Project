@@ -7,6 +7,7 @@ public class userGames {
     public String competitiveLevel;
     public String skillLevel;
     private String name;
+    private double score;
 
     public userGames(String userId, String gameId, String communicationLevel, String competitiveLevel, String skillLevel) {
         this.userId = userId;
@@ -63,5 +64,13 @@ public class userGames {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 }

@@ -198,17 +198,26 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_below="@+id/radioButtonNoPreferenceGame"
                   android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+                  android:layout_marginTop="5dp"
+                  android:orientation="vertical">
         <Button
                 android:id="@+id/search_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="12dp"
                 android:background="#3F51B5"
                 android:textColor="#FFF"
                 android:text="Search" />
+        <Button
+                android:id="@+id/recommendation_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="12dp"
+                android:background="@color/dark_neon_green"
+                android:text="Recommended By Game"/>
     </LinearLayout>
-
 </LinearLayout>

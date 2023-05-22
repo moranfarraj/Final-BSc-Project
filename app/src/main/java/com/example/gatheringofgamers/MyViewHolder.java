@@ -17,6 +17,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView locationView;
     RecyclerView gamesList;
     Button addTeammate;
+    TextView recommendationScore;
     public MyViewHolder(View itemView){
         super(itemView);
         gamesList = itemView.findViewById(R.id.user_games_recycler);
@@ -24,7 +25,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         genderView = itemView.findViewById(R.id.gender);
         locationView = itemView.findViewById(R.id.location);
         addTeammate = itemView.findViewById(R.id.addTeammateButton);
-
+        recommendationScore = itemView.findViewById(R.id.recommendation_score);
     }
 
 }

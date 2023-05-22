@@ -2,6 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +71,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         gamesRef = db.collection("games");
         userGamesList = new ArrayList<>();
         holder.nameView.setText(users.get(position).getName());
+        if(users.get(position).getScore()>50) {
+            holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
+            holder.recommendationScore.setTextColor(Color.GREEN);
+        }
+        if(users.get(position).getScore()<=50) {
+            holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
+            holder.recommendationScore.setTextColor(Color.RED);
+        }
         holder.genderView.setText(users.get(position).getGender());
         holder.locationView.setText(users.get(position).getLocation());
         addTeammateBut = holder.addTeammate;

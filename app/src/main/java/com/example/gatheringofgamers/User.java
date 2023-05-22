@@ -13,6 +13,7 @@ public class User implements Serializable {
     public String gender;
     private String id;
     public String location;
+    public double score;
 
     public User(String id,String name, String gender, String location) {
         this.id =id ;
@@ -87,6 +88,14 @@ public class User implements Serializable {
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public User(String name, String email, String password, int age, String gender, String location, String interests) {

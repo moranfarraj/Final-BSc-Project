@@ -42,7 +42,8 @@ public class ProfileFragment extends Fragment {
 
     private static final String ARG_USER_ID = "user_id";
     private static final int GALLERY_REQUEST_CODE = 123; // You can choose any integer here
-//    private static final int CAMERA_REQUEST_CODE = 124; // You can choose any integer here
+    private static final int REQUEST_IMAGE_CAPTURE = 101; // You can choose any integer here
+
 
 
 
@@ -141,9 +142,13 @@ public class ProfileFragment extends Fragment {
                 builder.setPositiveButton("Take Photo", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO Take Photo
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        }
                     }
                 });
+
                 builder.setNegativeButton("Choose from Gallery", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -159,18 +164,6 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
-//    private File createImageFile() throws IOException {
-//        // Create an image file name
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",         /* suffix */
-//                storageDir      /* directory */
-//        );
-//        return image;
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -199,30 +192,25 @@ public class ProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-//                break;
-//            case CAMERA_REQUEST_CODE:
-//                if(resultCode == Activity.RESULT_OK){
-//                    // The image is saved to the given Uri
-//                    Bitmap bitmap = null;
-//                    try {
-//                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    profile_img.setImageBitmap(bitmap);
-//
-//                    // Convert the image to a Base64 string
-//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                    byte[] bytes = baos.toByteArray();
-//                    String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-//
-//                    // Save the Base64 string to Firestore
-//                    Map<String, Object> user = new HashMap<>();
-//                    user.put("image", encodedImage);
-//                    db.collection("users").document(userId).update(user);
-//                }
-//                break;
+                       break;
+            case REQUEST_IMAGE_CAPTURE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Bundle extras = imageReturnedIntent.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    profile_img.setImageBitmap(imageBitmap);
+
+                    // Convert the image to a Base64 string
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] bytes = baos.toByteArray();
+                    String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+
+                    // Save the Base64 string to Firestore
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("image", encodedImage);
+                    db.collection("users").document(userId).update(user);
+                }
+                break;
         }
     }
 

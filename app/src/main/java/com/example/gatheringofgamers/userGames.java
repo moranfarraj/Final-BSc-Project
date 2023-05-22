@@ -6,6 +6,7 @@ public class userGames {
     public String communicationLevel;
     public String competitiveLevel;
     public String skillLevel;
+    private String name;
 
     public userGames(String userId, String gameId, String communicationLevel, String competitiveLevel, String skillLevel) {
         this.userId = userId;
@@ -54,5 +55,13 @@ public class userGames {
 
     public void setSkillLevel(String skillLevel) {
         this.skillLevel = skillLevel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

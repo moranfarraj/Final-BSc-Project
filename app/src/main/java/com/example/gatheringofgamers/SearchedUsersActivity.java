@@ -29,7 +29,7 @@ public class SearchedUsersActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userID");
         usersToShow = (List<User>) getIntent().getSerializableExtra("userList");
         Log.w(TAG,"users:"+usersToShow.size());
-        RecyclerView recyclerView= findViewById(R.id.searched_users_recycler);
+        RecyclerView recyclerView = findViewById(R.id.searched_users_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapter = new MyAdapter(this, usersToShow, userId);
         recyclerView.setAdapter(adapter);

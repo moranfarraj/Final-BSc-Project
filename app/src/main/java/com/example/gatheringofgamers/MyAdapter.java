@@ -33,10 +33,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     List<User> users;
     Button addTeammateBut;
     String userId;
+    RecyclerView recyclerView;
+    UserGameAdapter adapter;
     String currUser;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference userGamesRef;
     CollectionReference gamesRef;
+    List<userGames> userGamesList;
+    List<Game> games;
+    int count=0;
+    int count2=0;
+    int finalSize;
 
     public MyAdapter(Context context, List<User> users,String user) {
         this.currUser = user;
@@ -54,11 +61,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
-        List<String> games = new ArrayList<>();
+        User user = users.get(position);
+        recyclerView = holder.gamesList;
+        recyclerView.setLayoutManager((new LinearLayoutManager(this.context,LinearLayoutManager.VERTICAL,false)));
+        games = new ArrayList<>();
         userId = users.get(position).getId();
         userGamesRef = db.collection("userGames");
         gamesRef = db.collection("games");
-        List<userGames> userGamesList = new ArrayList<>();
+        userGamesList = new ArrayList<>();
         holder.nameView.setText(users.get(position).getName());
         holder.genderView.setText(users.get(position).getGender());
         holder.locationView.setText(users.get(position).getLocation());
@@ -80,37 +90,35 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 if (task.isSuccessful()) {
                     QuerySnapshot querySnapshot = task.getResult();
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    finalSize = documents.size();
                     for (DocumentSnapshot document : documents) {
                         userGames userGame = new userGames(document.get("userId").toString(), document.get("gameId").toString(), document.get("communicationLevel").toString(),
                                 document.get("competitiveLevel").toString(), document.get("skillLevel").toString());
+                        gamesRef.document(userGame.gameId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                              userGame.setName(documentSnapshot.get("name").toString());
+                                count++;
+                                if(count == finalSize){
+                                    UserGameAdapter adapter = new UserGameAdapter(context,userGamesList,userId);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            }
+                        });
                         userGamesList.add(userGame);
+                       Log.w(TAG,"size test:"+ userGamesList.size());
 
                     }
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
                 }
-                for(userGames userGame : userGamesList){
-                    String gameId = userGame.getGameId();
-                    gamesRef.get().addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            for (QueryDocumentSnapshot document1 : task1.getResult()) {
-                                // Access the data in the document
-                                if(document1.getId().equals(gameId)) {
-                                    String name = document1.get("name").toString();
-                                    games.add(name);
-                                }
-                                // Do something with the data
-                            }
-                        } else {
-                            games.add("No Games");
-                            Log.d(TAG, "Error getting documents: ", task1.getException());
-                        }
-                    });
+                if(count == finalSize){
+                    UserGameAdapter adapter = new UserGameAdapter(context,userGamesList,userId);
+                    recyclerView.setAdapter(adapter);
                 }
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.context, android.R.layout.simple_list_item_1, games);
-        holder.gamesList.setAdapter(adapter);
+
     }
 
     @Override

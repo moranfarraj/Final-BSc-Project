@@ -1,4 +1,6 @@
 package com.example.gatheringofgamers;
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class User implements Serializable {
     public String password;
     public int age;
     public String img;
+    public Bitmap decodedImg;
 
     public String gender;
     private String id;
@@ -114,6 +117,13 @@ public class User implements Serializable {
         return Objects.equals(id, user.id);
     }
 
+    public Bitmap getDecodedImg() {
+        return decodedImg;
+    }
+
+    public void setDecodedImg(Bitmap decodedImg) {
+        this.decodedImg = decodedImg;
+    }
 }
 
 

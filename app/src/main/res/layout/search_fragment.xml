@@ -79,6 +79,7 @@
     <LinearLayout android:layout_width="match_parent"
                   android:orientation="vertical"
                   android:layout_height="wrap_content"
+                  android:visibility="gone"
                   android:id="@+id/competitive_layout">
     <TextView
             android:layout_width="wrap_content"
@@ -117,6 +118,7 @@
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
                   android:orientation="vertical"
+                  android:visibility="gone"
                   android:layout_height="wrap_content"
                   android:id="@+id/skill_layout">
     <TextView
@@ -157,6 +159,7 @@
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
                   android:orientation="vertical"
+                  android:visibility="gone"
                   android:layout_height="wrap_content"
                   android:id="@+id/communication_layout">
     <TextView
@@ -219,5 +222,11 @@
                 android:padding="12dp"
                 android:background="@color/dark_neon_green"
                 android:text="Recommended By Game"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:gravity="center" android:layout_height="wrap_content">
+
+
     </LinearLayout>
 </LinearLayout>

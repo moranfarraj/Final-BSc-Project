@@ -1,6 +1,8 @@
 package com.example.gatheringofgamers;
 
-public class userGames {
+import java.io.Serializable;
+
+public class userGames implements Serializable {
     public String userId;
     public String gameId;
     public String communicationLevel;

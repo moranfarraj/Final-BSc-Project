@@ -2,10 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.recyclerview.widget.RecyclerView;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -17,11 +14,15 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView locationView;
     RecyclerView gamesList;
     Button addTeammate;
+    Button reportUser;
     TextView recommendationScore;
+    ImageView profile_img;
     public MyViewHolder(View itemView){
         super(itemView);
+        profile_img = itemView.findViewById(R.id.profile_picture);
         gamesList = itemView.findViewById(R.id.user_games_recycler);
         nameView = itemView.findViewById(R.id.name);
+        reportUser = itemView.findViewById(R.id.reportButton);
         genderView = itemView.findViewById(R.id.gender);
         locationView = itemView.findViewById(R.id.location);
         addTeammate = itemView.findViewById(R.id.addTeammateButton);

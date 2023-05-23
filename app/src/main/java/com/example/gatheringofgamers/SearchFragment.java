@@ -1,8 +1,10 @@
 package com.example.gatheringofgamers;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.*;
 import androidx.annotation.NonNull;
@@ -209,16 +211,52 @@ public class SearchFragment extends Fragment {
     }
 
     public void SearchTeammate(View v,List<Game> games,List<userGames> userGamesList){
-        List<String> userGamesID = new ArrayList<>();
+        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
+        CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
+
+        List<userGames> userGamesTemp = new ArrayList<>();
+        List<String> usersID = new ArrayList<>();
         String selectedGameId="";
-        for(Game game : games){
-            if(game.getName().equals(selectedGame)){
-                selectedGameId = game.getId();
+        //getting the ID of the selectedGame.
+
+            for (Game game : games) {
+                if (game.getName().equals(selectedGame)) {
+                    selectedGameId = game.getId();
+                }
+            }
+            //Adding the name of each game.
+            for (userGames userGame : userGamesList) {
+                for (Game game : games) {
+                    if (userGame.getGameId().equals(game.getId())) {
+                        userGame.setName(game.getName());
+                    }
+                }
+            }
+        if(!gamePreference.isChecked()) {
+            //adding the users that play the selected game.
+            for (userGames userGame : userGamesList) {
+                if (userGame.getGameId().equals(selectedGameId)) {
+                    Log.w(TAG, "user: " + userGame.getUserId() + "game id:" + userGame.getName());
+                    usersID.add(userGame.getUserId());
+                }
+            }
+
+            //creating new userGames list with all the games of the users that play the selected game.
+            for (userGames userGame : userGamesList) {
+                for (String id : usersID) {
+                    if (userGame.getUserId().equals(id)) {
+                        userGamesTemp.add(userGame);
+                    }
+                }
             }
         }
-        for(userGames userGame : userGamesList){
-            if(userGame.getGameId().equals(selectedGameId)){
-                userGamesID.add(userGame.getUserId());
+        else{
+            for(userGames userGame : userGamesList){
+                userGamesTemp.add(userGame);
             }
         }
 
@@ -226,8 +264,7 @@ public class SearchFragment extends Fragment {
         RadioButton mRadio = v.findViewById(R.id.radioButtonMale);
         RadioButton fRadio = v.findViewById(R.id.radioButtonFemale);
         RadioButton oRadio = v.findViewById(R.id.radioButtonOther);
-        CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
-        CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
+
 
 
         if(mRadio.isChecked())
@@ -273,6 +310,8 @@ public class SearchFragment extends Fragment {
                     Log.w(TAG,"total users:"+totalUsers);
                     for (DocumentSnapshot document : documents) {
                         User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                        String encodedImage = document.getString("image");
+                        user.setImg(encodedImage);
                         if (!user.getId().equals(userId)) {
                             // check if the document with from = userId and to = user.getId() OR from = user.getId() and to = userId exists in the collection friendsRef
                             friendsRef.whereEqualTo("from", userId).whereEqualTo("to", user.getId())
@@ -294,9 +333,11 @@ public class SearchFragment extends Fragment {
                                                                 } else {
                                                                     Log.w(TAG, "User:" + user.getId());
                                                                     if(!gamePreference.isChecked()) {
-                                                                        for (String tempID : userGamesID) {
-                                                                            if (user.getId().equals(tempID)) {
-                                                                                users.add(user);
+                                                                        for (userGames tempUserGame : userGamesTemp) {
+                                                                            if (user.getId().equals(tempUserGame.getUserId())) {
+                                                                                if(!users.contains(user)) {
+                                                                                    users.add(user);
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -313,8 +354,10 @@ public class SearchFragment extends Fragment {
                                                                     for(User user : users){
                                                                         userList.add(user);
                                                                     }
+                                                                    progressDialog.dismiss();
                                                                     Intent intent = new Intent(v.getContext(), SearchedUsersActivity.class);
                                                                     intent.putExtra("userList", (Serializable) userList);
+                                                                    intent.putExtra("userGamesList", (Serializable) userGamesTemp);
                                                                     intent.putExtra("userID",userId);
                                                                     startActivity(intent);
                                                                 }
@@ -332,7 +375,9 @@ public class SearchFragment extends Fragment {
                     if(count==totalUsers) {
                         Log.w(TAG, "users size sent:" + users.size());
                         List<User> userList = new ArrayList<>();
+                        progressDialog.dismiss();
                         Intent intent = new Intent(v.getContext(), SearchedUsersActivity.class);
+                        intent.putExtra("userGamesList", (Serializable) userGamesTemp);
                         intent.putExtra("userList", (Serializable) userList);
                         startActivity(intent);
                     }
@@ -347,44 +392,70 @@ public class SearchFragment extends Fragment {
         });
     }
     public void RecommendedTeammate(View view,List<Game> games,List<userGames> userGamesList) {
+        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         List<userGames> userGamesHelp= new ArrayList<>();
         List<userGames> userGamesRecommended = new ArrayList<>();
+        List<String> usersID = new ArrayList<>();
+        List<userGames> userGamesTemp = new ArrayList<>();
         String gameId = "";
         userGames myGame = null;
+        //getting the game id of the selectedGame
         for (Game game : games) {
             if (selectedGame.equals(game.getName())) {
                 gameId = game.getId();
             }
         }
-
-        for (userGames userGame : userGamesList) {
-                if (userGame.getGameId().equals(gameId)) {
-                    Log.w(TAG,"test");
-                    if (userGame.getUserId().equals(userId)) {
-
-                        myGame = new userGames(userGame.getUserId(), userGame.getGameId(), userGame.getCommunicationLevel(), userGame.getCompetitiveLevel(), userGame.getSkillLevel());
-                    }
-                    else{
-                        userGamesRecommended.add(userGame);
-                    }
+        //adding the name of the game in userGame.
+        for(userGames userGame : userGamesList){
+            for(Game game : games){
+                if(userGame.getGameId().equals(game.getId())){
+                    userGame.setName(game.getName());
                 }
+            }
+        }
+        //adding the users that play the selected game.
+        for(userGames userGame : userGamesList){
+            if(userGame.getGameId().equals(gameId)){
+                usersID.add(userGame.getUserId());
+            }
+        }
+        //creating new userGames list with all the games of the users that play the selected game.
+        for(userGames userGame : userGamesList){
+            for(String id : usersID){
+                if(userGame.getUserId().equals(id)){
+                    userGamesTemp.add(userGame);
+                }
+            }
+        }
+        //
+        for (userGames userGame : userGamesTemp) {
+                if (userGame.getGameId().equals(gameId))
+                    if (userGame.getUserId().equals(userId))
+                        myGame = new userGames(userGame.getUserId(), userGame.getGameId(), userGame.getCommunicationLevel(), userGame.getCompetitiveLevel(), userGame.getSkillLevel());
         }
         if(myGame == null){
+            progressDialog.dismiss();
             Toast.makeText(view.getContext(), "You do not play this game!", Toast.LENGTH_SHORT).show();
         }
         else {
-            for (userGames userGame : userGamesRecommended) {
-                int competitiveLevel = Integer.parseInt(userGame.getCompetitiveLevel());
-                int myCompetitiveLevel = Integer.parseInt(myGame.getCompetitiveLevel());
-                int competitiveScore = (5 - abs(myCompetitiveLevel - competitiveLevel));
-                int skillLevel = Integer.parseInt(userGame.getSkillLevel());
-                int mySkillLevel = Integer.parseInt(myGame.getSkillLevel());
-                int skillScore = (5 - abs(mySkillLevel - skillLevel));
-                int communicationLevel = Integer.parseInt(userGame.getCommunicationLevel());
-                int myCommunicationLevel = Integer.parseInt(myGame.getCommunicationLevel());
-                int communicationScore = (5 - abs(myCommunicationLevel - communicationLevel));
-                double finalScore = (competitiveScore + skillScore + communicationScore) * (100/15);
-                userGame.setScore(finalScore);
+            for (userGames userGame : userGamesTemp) {
+                if(userGame.getGameId().equals(gameId)) {
+                    int competitiveLevel = Integer.parseInt(userGame.getCompetitiveLevel());
+                    int myCompetitiveLevel = Integer.parseInt(myGame.getCompetitiveLevel());
+                    int competitiveScore = (5 - abs(myCompetitiveLevel - competitiveLevel));
+                    int skillLevel = Integer.parseInt(userGame.getSkillLevel());
+                    int mySkillLevel = Integer.parseInt(myGame.getSkillLevel());
+                    int skillScore = (5 - abs(mySkillLevel - skillLevel));
+                    int communicationLevel = Integer.parseInt(userGame.getCommunicationLevel());
+                    int myCommunicationLevel = Integer.parseInt(myGame.getCommunicationLevel());
+                    int communicationScore = (5 - abs(myCommunicationLevel - communicationLevel));
+                    double finalScore = (competitiveScore + skillScore + communicationScore) * (100 / 15);
+                    userGame.setScore(finalScore);
+                }
             }
             db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 int count = 0;
@@ -399,6 +470,8 @@ public class SearchFragment extends Fragment {
                         Log.w(TAG, "total users:" + totalUsers);
                         for (DocumentSnapshot document : documents) {
                             User user = new User(document.getId(), document.get("username").toString(), document.get("gender").toString(), document.get("country").toString());
+                            String encodedImage = document.getString("image");
+                            user.setImg(encodedImage);
                             if (!user.getId().equals(userId)) {
                                 // check if the document with from = userId and to = user.getId() OR from = user.getId() and to = userId exists in the collection friendsRef
                                 friendsRef.whereEqualTo("from", userId).whereEqualTo("to", user.getId())
@@ -419,10 +492,15 @@ public class SearchFragment extends Fragment {
                                                                         // document with from = user.getId() and to = userId exists
                                                                     } else {
                                                                         Log.w(TAG, "User:" + user.getId());
-                                                                        for (userGames temp : userGamesRecommended) {
+                                                                        for (userGames temp : userGamesTemp) {
                                                                             if (user.getId().equals(temp.getUserId())) {
-                                                                                user.setScore(temp.getScore());
-                                                                                users.add(user);
+                                                                                Log.w(TAG, "User TEST ID:" + user.getId());
+                                                                                if(temp.getName().equals(selectedGame)){
+                                                                                    user.setScore(temp.getScore());
+                                                                                }
+                                                                                if(!users.contains(user)) {
+                                                                                    users.add(user);
+                                                                                }
                                                                             }
                                                                         }
 //                                                                    RecyclerView.Adapter adapter = new MyAdapter(v.getContext(), users, userId);
@@ -431,12 +509,15 @@ public class SearchFragment extends Fragment {
                                                                     }
                                                                     count++;
                                                                     if (count == totalUsers) {
+                                                                        Log.w(TAG, "recommended users size sent:" + users.size());
                                                                         List<User> userList = new ArrayList<>();
                                                                         for (User user : users) {
                                                                             userList.add(user);
                                                                         }
+                                                                        progressDialog.dismiss();
                                                                         Intent intent = new Intent(view.getContext(), SearchedUsersActivity.class);
                                                                         intent.putExtra("userList", (Serializable) userList);
+                                                                        intent.putExtra("userGamesList", (Serializable) userGamesTemp);
                                                                         intent.putExtra("userID", userId);
                                                                         startActivity(intent);
                                                                     }
@@ -451,10 +532,12 @@ public class SearchFragment extends Fragment {
                             }
                         }
                         if (count == totalUsers) {
-                            Log.w(TAG, "users size sent:" + users.size());
+                            Log.w(TAG, "recommended users size sent:" + users.size());
                             List<User> userList = new ArrayList<>();
+                            progressDialog.dismiss();
                             Intent intent = new Intent(view.getContext(), SearchedUsersActivity.class);
                             intent.putExtra("userList", (Serializable) userList);
+                            intent.putExtra("userGamesList", (Serializable) userGamesTemp);
                             startActivity(intent);
                         }
 //                    RecyclerView.Adapter adapter =new MyAdapter(v.getContext(), users, userId);
@@ -482,21 +565,27 @@ public class SearchFragment extends Fragment {
     }
     public void ChangeGamePreference(View v){
         Spinner mSpinnerGames = v.findViewById(R.id.game_spinner);
+        Button recommendedButton = v.findViewById(R.id.recommendation_button);
         CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
         LinearLayout communicationLayout = v.findViewById(R.id.communication_layout);
         LinearLayout skillLayout = v.findViewById(R.id.skill_layout);
         LinearLayout competitiveLayout = v.findViewById(R.id.competitive_layout);
         if(gamePreference.isChecked()) {
+            recommendedButton.setClickable(false);
+            recommendedButton.setEnabled(false);
             mSpinnerGames.setEnabled(false);
             communicationLayout.setVisibility(View.GONE);
             skillLayout.setVisibility(View.GONE);
             competitiveLayout.setVisibility(View.GONE);
+
         }
         else{
+            recommendedButton.setClickable(true);
+            recommendedButton.setEnabled(true);
             mSpinnerGames.setEnabled(true);
-            communicationLayout.setVisibility(View.VISIBLE);
-            skillLayout.setVisibility(View.VISIBLE);
-            competitiveLayout.setVisibility(View.VISIBLE);
+            communicationLayout.setVisibility(View.GONE);
+            skillLayout.setVisibility(View.GONE);
+            competitiveLayout.setVisibility(View.GONE);
         }
     }
 }

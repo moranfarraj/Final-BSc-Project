@@ -48,6 +48,16 @@ public class UserGameAdapter extends RecyclerView.Adapter<UserGameViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull UserGameViewHolder holder, int position) {
         int temp = position;
+        userGames userGame = userGamesList.get(position);
+        holder.gameText.setText(userGame.getName());
+        Log.w(TAG,"game name:"+userGame.getName());
+        Log.w(TAG,"skill:"+userGame.skillLevel);
+        Log.w(TAG,"communication:"+userGame.communicationLevel);
+        Log.w(TAG,"competitive:"+userGame.getCompetitiveLevel());
+        colorBox(userGame.getCompetitiveLevel(),"competitive",holder);
+        colorBox(userGame.getSkillLevel(),"skill",holder);
+        colorBox(userGame.getCommunicationLevel(),"communication",holder);
+        /*
         name = "";
         db.collection("games").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -61,106 +71,108 @@ public class UserGameAdapter extends RecyclerView.Adapter<UserGameViewHolder> {
                         games.add(game);
                         if(game.getId().equals(userGamesList.get(temp).getGameId())){
                             name = game.getName();
+                            Log.w(TAG,"userGames:"+userGamesList.size());
+                            userGames userGame = userGamesList.get(temp);
+                            if(userId.equals(userGame.getUserId())) {
+                                holder.gameText.setText(userGame.getName());
+                                Log.w(TAG,"user ID:"+userGame.getUserId());
+                                Log.w(TAG,"game name:"+userGame.getName());
+                                colorBox(userGame.getCompetitiveLevel(),"competitive",holder);
+                                colorBox(userGame.getSkillLevel(),"skill",holder);
+                                colorBox(userGame.getCommunicationLevel(),"communication",holder);
+                            }
                         }
                         Log.w(TAG,"test");
                     }
                 }
             }
-        });
-        Log.w(TAG,"userGames:"+userGamesList.size());
-            userGames userGame = userGamesList.get(position);
-            if(userId.equals(userGame.getUserId())) {
-                holder.gameText.setText(userGame.getName());
-                colorBox(userGame.getCompetitiveLevel(),"competitive",holder);
-                colorBox(userGame.getSkillLevel(),"skill",holder);
-                colorBox(userGame.getCommunicationLevel(),"communication",holder);
-            }
+        });*/
     }
-
 
     @Override
     public int getItemCount() {
         return userGamesList.size();
     }
     public void colorBox(String lvl,String Type,UserGameViewHolder viewHolder){
+        Log.w(TAG,"type:"+Type+"lvl:"+lvl+"holder:"+viewHolder.toString());
         if(Type.equals("competitive")){
             if(lvl.equals("1")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.RED);
+                viewHolder.competitiveView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("2")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView2.setBackgroundColor(Color.RED);
+                viewHolder.competitiveView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("3")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView2.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView3.setBackgroundColor(Color.RED);
+                viewHolder.competitiveView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("4")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView2.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView3.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView4.setBackgroundColor(Color.RED);
+                viewHolder.competitiveView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("5")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView2.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView3.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView4.setBackgroundColor(Color.RED);
-                viewHolder.competitiveView5.setBackgroundColor(Color.RED);
+                viewHolder.competitiveView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.competitiveView5.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
         }
-        if(Type.equals("skill")){
+        else if(Type.equals("skill")){
             if(lvl.equals("1")){
-                viewHolder.skillView1.setBackgroundColor(Color.GREEN);
+                viewHolder.skillView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("2")){
-                viewHolder.skillView1.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView2.setBackgroundColor(Color.GREEN);
+                viewHolder.skillView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("3")){
-                viewHolder.skillView1.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView2.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView3.setBackgroundColor(Color.GREEN);
+                viewHolder.skillView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("4")){
-                viewHolder.skillView1.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView2.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView3.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView4.setBackgroundColor(Color.GREEN);
+                viewHolder.skillView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("5")){
-                viewHolder.skillView1.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView2.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView3.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView4.setBackgroundColor(Color.GREEN);
-                viewHolder.skillView5.setBackgroundColor(Color.GREEN);
+                viewHolder.skillView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.skillView5.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
-        }if(Type.equals("communication")){
+        }else if(Type.equals("communication")){
             if(lvl.equals("1")){
-                viewHolder.communicationView1.setBackgroundColor(Color.BLUE);
+                viewHolder.communicationView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("2")){
-                viewHolder.communicationView1.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView2.setBackgroundColor(Color.BLUE);
+                viewHolder.communicationView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("3")){
-                viewHolder.competitiveView1.setBackgroundColor(Color.BLUE);
-                viewHolder.competitiveView2.setBackgroundColor(Color.BLUE);
-                viewHolder.competitiveView3.setBackgroundColor(Color.BLUE);
+                viewHolder.communicationView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("4")){
-                viewHolder.communicationView1.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView2.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView3.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView4.setBackgroundColor(Color.BLUE);
+                viewHolder.communicationView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
             if(lvl.equals("5")){
-                viewHolder.communicationView1.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView2.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView3.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView4.setBackgroundColor(Color.BLUE);
-                viewHolder.communicationView5.setBackgroundColor(Color.BLUE);
+                viewHolder.communicationView1.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView2.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView3.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView4.setBackgroundColor(Color.parseColor("#FF0D98BA"));
+                viewHolder.communicationView5.setBackgroundColor(Color.parseColor("#FF0D98BA"));
             }
         }
 

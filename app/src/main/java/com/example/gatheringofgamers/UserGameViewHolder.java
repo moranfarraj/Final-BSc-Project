@@ -16,7 +16,6 @@ public class UserGameViewHolder extends RecyclerView.ViewHolder{
     public UserGameViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         gameText = itemView.findViewById(R.id.game_text);
-
         competitiveView1 = itemView.findViewById(R.id.competitivebox1);
         competitiveView2 = itemView.findViewById(R.id.competitivebox2);
         competitiveView3 = itemView.findViewById(R.id.competitivebox3);

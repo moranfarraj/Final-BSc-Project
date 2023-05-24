@@ -2,23 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:id="@+id/gamesLayout"
+                  android:layout_weight="1"
+                  android:orientation="vertical"                  android:layout_height="wrap_content">
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/games_recycler"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:orientation="vertical"
             android:scrollbars="vertical"/>
-
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
     <Button
             android:id="@+id/addGameButton"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Add Game"
-            android:layout_below="@id/games_recycler"
             android:layout_centerHorizontal="true"
             android:onClick="addGame"/>
+    </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

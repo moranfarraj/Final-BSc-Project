@@ -41,6 +41,7 @@ public class gettingStartedActivity extends AppCompatActivity {
     private SeekBar levelSeekBar;
     private SeekBar communicationLevelSeekBar;
     private String tempUser;
+    private ImageButton backBut;
     private FirebaseUser currUser;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,13 @@ public class gettingStartedActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        backBut = findViewById(R.id.back_button);
+        backBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

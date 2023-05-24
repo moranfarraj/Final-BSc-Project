@@ -12,47 +12,43 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 public class ProfileFragment extends Fragment {
 
     private static final String ARG_USER_ID = "user_id";
     private static final int GALLERY_REQUEST_CODE = 123; // You can choose any integer here
     private static final int REQUEST_IMAGE_CAPTURE = 101; // You can choose any integer here
-
-
-
-
     private ViewPager viewPager;
     Uri image;
     private ProfilePagerAdapter pagerAdapter;
     private FirebaseFirestore db;
     private ImageView profile_img;
     private String username;
+    List<userGames> userGamesList;
 
     private String userId;
 
@@ -82,6 +78,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.profile, container, false);
+        userGamesList = new ArrayList<>();
         ImageButton logout_btn =view.findViewById(R.id.logout_button);
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +87,7 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-                viewPager = view.findViewById(R.id.view_pager);
-        pagerAdapter = new ProfilePagerAdapter(getChildFragmentManager(), userId);
-        viewPager.setAdapter(pagerAdapter);
         profile_img = view.findViewById(R.id.profile_picture);
-
-        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
         DocumentReference usersRef = db.collection("users").document(userId);
         usersRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -124,6 +114,29 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 username = "Error";
+            }
+        });
+        db.collection("userGames").whereEqualTo("userId",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    for (DocumentSnapshot document : documents) {
+                        Log.w(TAG,"DOCUMENT:"+document.getId());
+                        userGames userGame = new userGames(document.get("userId").toString(), document.get("gameId").toString(), document.get("communicationLevel").toString(), document.get("competitiveLevel").toString(), document.get("skillLevel").toString());
+                        userGamesList.add(userGame);
+                    }
+                    viewPager = view.findViewById(R.id.view_pager);
+                    pagerAdapter = new ProfilePagerAdapter(getChildFragmentManager(), userId,userGamesList);
+                    viewPager.setAdapter(pagerAdapter);
+                    profile_img = view.findViewById(R.id.profile_picture);
+                    TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+                    tabLayout.setupWithViewPager(viewPager);
+                }
+                else{
+                    Toast.makeText(view.getContext(), "Error getting user games!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,28 +11,40 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 public class MyGamesFragment extends Fragment {
 
     private static final String ARG_USER_ID = "user_id";
     private FirebaseFirestore db;
     private String userId;
+    RecyclerView recyclerView;
+    UserGameAdapter adapter;
+    static List<userGames> userGamesList;
     private Button addGameButton;
 
     public MyGamesFragment() {
         // Required empty public constructor
     }
 
-    public static MyGamesFragment newInstance(String userId) {
+    public static MyGamesFragment newInstance(String userId,List<userGames> userGames) {
         MyGamesFragment fragment = new MyGamesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_USER_ID, userId);
+        userGamesList =  new ArrayList<>();
+        for(userGames userGame : userGames){
+            userGamesList.add(userGame);
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +70,31 @@ public class MyGamesFragment extends Fragment {
                 addGame(v);
             }
         });
-        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
+        db.collection("games").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    for(DocumentSnapshot document : documents){
+                        for(userGames userGame :userGamesList){
+                            if(userGame.getGameId().equals(document.getId())){
+                                userGame.setName(document.get("name").toString());
+                                Log.w(TAG,"GAME TEST:"+userGame.getName());
+                            }
+                        }
+                    }
+                    recyclerView = view.findViewById(R.id.games_recycler);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+                    adapter = new UserGameAdapter(view.getContext(),userGamesList,userId);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
 
+
+
+/*
         Query query = db.collection("userGames").whereEqualTo("userId", userId);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -121,7 +157,7 @@ public class MyGamesFragment extends Fragment {
                 // Handle the error
             }
         });
-
+*/
         return view;
     }
 

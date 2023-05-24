@@ -2,42 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-    <HorizontalScrollView
-            android:id="@+id/table_scroll"
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/games_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:scrollbars="vertical"/>
 
-        <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:stretchColumns="*">
-
-            <TableRow>
-                <TextView
-                        android:text="Game"
-                        android:textStyle="bold"
-                        android:padding="8dp"/>
-
-                <TextView
-                        android:text="Competitive Level"
-                        android:textStyle="bold"
-                        android:padding="8dp"/>
-
-                <TextView
-                        android:text="Skill Level"
-                        android:textStyle="bold"
-                        android:padding="8dp"/>
-
-                <TextView
-                        android:text="Communication Level"
-                        android:textStyle="bold"
-                        android:padding="8dp"
-                        android:layout_width="wrap_content"/>
-            </TableRow>
-
-        </TableLayout>
-    </HorizontalScrollView>
 </RelativeLayout>

@@ -49,17 +49,20 @@
 
     </LinearLayout>
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_alignParentBottom="true"
+                  android:gravity="center"
+                  android:layout_marginBottom="30dp"
+                  android:layout_height="wrap_content">
     <Button
             android:id="@+id/signup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="30dp"
             android:background="@drawable/button_background"
             android:textColor="#FFFFFF"
             android:text="Don't have an account yet? Signup"
             android:onClick="onButtonClick"/>
+    </LinearLayout>
 
 </RelativeLayout>

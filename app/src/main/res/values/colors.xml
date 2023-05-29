@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dark_grey">#303030</color>
+    <color name="dark_grey">#99303030</color>
     <color name="black">#000000</color>
-    <color name="neon_blue">#0D98BA</color>
+    <color name="neon_blue">#00CDFF</color>
     <color name="dark_neon_green">#2C8C12</color>
     <color name="white">#FFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
@@ -11,4 +11,9 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="light_gray">#D3D3D3</color>
+    <color name="neon_green">#39FF14</color>
+    <color name="dark_purple"> #4B0082</color>
+    <color name="custom_blue">#80474FAB</color>
+    <color name="neon_red">#FF0051</color>
+    <color name="neon_red_customized">#95FF2369</color>
 </resources>

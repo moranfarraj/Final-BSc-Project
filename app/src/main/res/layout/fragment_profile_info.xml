@@ -15,7 +15,6 @@
                 android:layout_height="wrap_content"
                 android:text="Gender:"
                 android:textSize="18sp"
-                android:textColor="#000"
                 android:layout_marginTop="10dp"/>
 
         <RadioGroup
@@ -29,6 +28,7 @@
                     android:id="@+id/radioButtonMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:text="Male"
                     android:enabled="false"/>
 
@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Female"
+                    android:textColor="@color/white"
                     android:enabled="false"/>
 
             <RadioButton
@@ -44,6 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Other"
+                    android:textColor="@color/white"
                     android:enabled="false"/>
         </RadioGroup>
 
@@ -52,13 +54,13 @@
                 android:layout_height="wrap_content"
                 android:text="Location:"
                 android:textSize="18sp"
-                android:textColor="#000"
                 android:layout_marginTop="10dp"/>
 
         <Spinner
                 android:id="@+id/spinner_countries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"/>
 
         <TextView
@@ -66,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:text="Date Of Birth:"
                 android:textSize="18sp"
-                android:textColor="#000"
                 android:layout_marginTop="10dp"/>
 
         <EditText
@@ -83,7 +84,6 @@
                 android:layout_height="wrap_content"
                 android:text="Age: "
                 android:textSize="18sp"
-                android:textColor="#000"
                 android:layout_marginTop="10dp"/>
 
         <Button

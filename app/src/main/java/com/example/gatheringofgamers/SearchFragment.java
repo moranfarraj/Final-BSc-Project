@@ -2,6 +2,7 @@ package com.example.gatheringofgamers;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.widget.*;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +105,16 @@ public class SearchFragment extends Fragment {
         List<Game> games = new ArrayList<>();
         userGamesList = new ArrayList<>();
         Spinner mSpinnerCountries = view.findViewById(R.id.spinner_countries);
-        mCountryAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, mCountryList);
+        mCountryAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, mCountryList) {
+            @Override
+            public View getDropDownView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.black));
+                return view;
+            }
+        };
+
         mSpinnerCountries.setAdapter(mCountryAdapter);
         CollectionReference usersRef = db.collection("users");
         CollectionReference countriesRef = db.collection("countries");
@@ -125,7 +136,15 @@ public class SearchFragment extends Fragment {
         });
         gameList = new ArrayList<>();
         gamesSpinner = view.findViewById(R.id.game_spinner);
-        gamesAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gameList);
+        gamesAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, gameList){
+            @Override
+            public View getDropDownView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.black));
+                return view;
+            }
+        };
         gamesSpinner.setAdapter(gamesAdapter);
         Query gameQuery = gamesRef.orderBy("name",Query.Direction.ASCENDING);
         gameQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -556,17 +575,22 @@ public class SearchFragment extends Fragment {
     }
 
     public void ChangeLocationPreference(View v){
+        CardView countryCard = v.findViewById(R.id.country_cardview);
         Spinner mSpinnerCountries = v.findViewById(R.id.spinner_countries);
         CheckBox locationPreference = v.findViewById(R.id.radioButtonNoPreference);
         if(locationPreference.isChecked()) {
             mSpinnerCountries.setEnabled(false);
+            mSpinnerCountries.setClickable(false);
+            countryCard.setEnabled(false);
         }
         else{
             mSpinnerCountries.setEnabled(true);
-
+            mSpinnerCountries.setClickable(true);
+            countryCard.setEnabled(true);
         }
     }
     public void ChangeGamePreference(View v){
+        CardView gameCard = v.findViewById(R.id.game_cardview);
         Spinner mSpinnerGames = v.findViewById(R.id.game_spinner);
         Button recommendedButton = v.findViewById(R.id.recommendation_button);
         CheckBox gamePreference = v.findViewById(R.id.radioButtonNoPreferenceGame);
@@ -577,6 +601,9 @@ public class SearchFragment extends Fragment {
             recommendedButton.setClickable(false);
             recommendedButton.setEnabled(false);
             mSpinnerGames.setEnabled(false);
+            mSpinnerGames.setClickable(false);
+            gameCard.setEnabled(false);
+            gameCard.setClickable(false);
             communicationLayout.setVisibility(View.GONE);
             skillLayout.setVisibility(View.GONE);
             competitiveLayout.setVisibility(View.GONE);
@@ -586,6 +613,9 @@ public class SearchFragment extends Fragment {
             recommendedButton.setClickable(true);
             recommendedButton.setEnabled(true);
             mSpinnerGames.setEnabled(true);
+            mSpinnerGames.setClickable(true);
+            gameCard.setEnabled(true);
+            gameCard.setClickable(true);
             communicationLayout.setVisibility(View.GONE);
             skillLayout.setVisibility(View.GONE);
             competitiveLayout.setVisibility(View.GONE);

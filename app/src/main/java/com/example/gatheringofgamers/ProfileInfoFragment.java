@@ -138,7 +138,15 @@ public class ProfileInfoFragment extends Fragment {
                     countrySpinner = view.findViewById(R.id.spinner_countries);
                     countrySpinner.setClickable(false);
                     CountryList = new ArrayList<>();
-                    adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, CountryList);
+                    adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, CountryList){
+                        @Override
+                        public View getDropDownView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView textView = (TextView) view;
+                            textView.setTextColor(getResources().getColor(R.color.black));
+                            return view;
+                        }
+                    };
                     countrySpinner.setAdapter(adapter);
                     CollectionReference countriesRef = db.collection("countries");
                     Query query = countriesRef.orderBy("name", Query.Direction.ASCENDING);

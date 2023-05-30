@@ -16,4 +16,5 @@
     <color name="custom_blue">#80474FAB</color>
     <color name="neon_red">#FF0051</color>
     <color name="neon_red_customized">#95FF2369</color>
+    <color name="dark_grey_hover">#4D303030</color>
 </resources>

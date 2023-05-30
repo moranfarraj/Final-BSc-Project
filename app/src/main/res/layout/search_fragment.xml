@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:padding="16dp">
 
@@ -24,6 +24,7 @@
             android:id="@+id/radioGroupGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/dark_grey_hover"
             android:orientation="horizontal">
 
         <RadioButton
@@ -50,38 +51,52 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="10dp"
             android:text="Choose Location:"
             android:textSize="15dp"
             android:textStyle="bold"/>
+    <androidx.cardview.widget.CardView
+            android:id="@+id/country_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/dark_grey_hover">
 
     <Spinner
             android:id="@+id/spinner_countries"
             android:layout_width="match_parent"
             android:textColor="@color/black"
             android:layout_height="wrap_content" />
+    </androidx.cardview.widget.CardView>
     <CheckBox
             android:id="@+id/radioButtonNoPreference"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/dark_grey_hover"
             android:textColor="@color/white"
             android:text="No Location Preference" />
 
     <TextView
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:text="Choose Game:"
             android:textStyle="bold"/>
-
+    <androidx.cardview.widget.CardView
+            android:id="@+id/game_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/dark_grey_hover">
     <Spinner
             android:id="@+id/game_spinner"
             android:layout_width="match_parent"
             android:textColor="@color/black"
             android:layout_height="wrap_content" />
+    </androidx.cardview.widget.CardView>
     <CheckBox
             android:id="@+id/radioButtonNoPreferenceGame"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/dark_grey_hover"
             android:textColor="@color/white"
             android:text="No Game Preference" />
     <LinearLayout android:layout_width="match_parent"
@@ -95,7 +110,6 @@
             android:text="Competitive level"
             android:textSize="16sp"
             android:textColor="#000000"/>
-
 
     <SeekBar
             android:id="@+id/competitive_level_seekbar"

@@ -2,17 +2,19 @@
     <!-- Base application theme. -->
     <style name="Theme.GatheringOfGamers" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/dark_cyan</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/creamy_white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/dark_cyan</item>
+        <item name="colorSecondaryVariant">@color/dark_cyan</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Background color. -->
         <item name="android:windowBackground">@drawable/background_theme</item>
+        <!-- Text color theme -->
+        <item name="android:textColor">@color/creamy_white</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

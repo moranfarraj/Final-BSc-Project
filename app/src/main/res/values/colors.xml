@@ -17,4 +17,8 @@
     <color name="neon_red">#FF0051</color>
     <color name="neon_red_customized">#95FF2369</color>
     <color name="dark_grey_hover">#4D303030</color>
+    <color name="dark_cyan">#008B8B</color>
+    <color name="darker_cyan">#006666</color>
+    <color name="creamy_white">#F5F5F5</color>
+    <color name="bright_yellow">#FFFF00</color>
 </resources>

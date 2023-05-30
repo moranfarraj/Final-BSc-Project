@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.annotation.NonNull;
@@ -46,8 +47,15 @@ public class SignupActivity extends AppCompatActivity {
         mSpinnerCountries = findViewById(R.id.spinner_countries);
 
         // Set spinner adapter
-        mCountryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, mCountryList);
-        mSpinnerCountries.setAdapter(mCountryAdapter);
+        mCountryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mCountryList){
+            @Override
+            public View getDropDownView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.black));
+                return view;
+            }
+        }; mSpinnerCountries.setAdapter(mCountryAdapter);
 
         // Query countries collection
         CollectionReference countriesRef = mFirestore.collection("countries");

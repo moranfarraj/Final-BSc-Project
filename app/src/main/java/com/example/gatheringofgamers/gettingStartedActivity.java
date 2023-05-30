@@ -1,6 +1,7 @@
 package com.example.gatheringofgamers;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -84,7 +85,15 @@ public class gettingStartedActivity extends AppCompatActivity {
         communicationLevelSeekBar = findViewById(R.id.communication_level_seekbar);
         levelSeekBar = findViewById(R.id.level_seekbar);
         // Set spinner adapter
-        gamesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, gameList);
+        gamesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, gameList){
+            @Override
+            public View getDropDownView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.black));
+                return view;
+            }
+        };
         gamesSpinner.setAdapter(gamesAdapter);
         gamesRef = mFirestore.collection("games");
         Query query = gamesRef.orderBy("name", Query.Direction.ASCENDING);

@@ -103,7 +103,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         if(users.get(position).getScore()!=0) {
             if (users.get(position).getScore() > 75) {
                 holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");
-                holder.recommendationScore.setTextColor(Color.parseColor("#FF2C8C12"));
+                holder.recommendationScore.setTextColor(Color.parseColor("#39FF14"));
             }
             if (users.get(position).getScore() <= 50 ) {
                 holder.recommendationScore.setText("" + users.get(position).getScore() + "% Match");

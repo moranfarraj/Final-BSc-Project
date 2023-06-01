@@ -21,4 +21,5 @@
     <color name="darker_cyan">#006666</color>
     <color name="creamy_white">#F5F5F5</color>
     <color name="bright_yellow">#FFFF00</color>
+    <color name="neon_red_chat">#80FF0000</color>
 </resources>

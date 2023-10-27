@@ -60,34 +60,42 @@ The inspiration for this project came from our own experiences and frustrations 
 ## Usage
 Please refer to our comprehensive [User Guide](./GOG%20-%20User%20Guide.pdf) for detailed instructions on how to maximize your experience with Gathering of Gamers.
 
-## Screenshots
 - **Sign up (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2" width="250"/>
 
 - **Login (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3" width="250"/>
 
 - **Profile Page (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4" width="250"/>
 
 - **My Games (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c" width="250"/>
 
 - **Search (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a" width="250"/>
 
 - **Chat (Fragment):**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c" width="250"/>
 
 ## Diagrams
 - **ERD:**
-  <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/a4f6df32-ad1c-49c9-9d37-0e9624676412" width="500"/>
+  <br>
+  <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/a4f6df32-ad1c-49c9-9d37-0e9624676412" width="550"/>
   
 - **Architecture Diagram:**
+  <br>
   <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/4dd02a7f-9756-4e12-b7da-c3ea66787c49" width="450"/>
   
 - **Use Case Diagram:**
-  <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/77a948fe-23bd-4635-a09d-cbcad40bbbbb" width="500"/>
+  <br>
+  <img src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/77a948fe-23bd-4635-a09d-cbcad40bbbbb" width="550"/>
 
 
 ## Future Enhancements

@@ -61,18 +61,28 @@ The inspiration for this project came from our own experiences and frustrations 
 Please refer to our comprehensive [User Guide](#) for detailed instructions on how to maximize your experience with Gathering of Gamers.
 
 ## Screenshots
-- **Sign up (Fragment_:**
-<img width="212" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2">
+- **Sign up (Fragment):**
+![Sign Up]<img width="212" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2">
+
+
 - **Login (Fragment):**
-<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3">
+![Login]<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3">
+
+
 - **Profile Page (Fragment):**
-<img width="120" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4">
+![Profile Page]<img width="120" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4">
+
+
 - **My Games (Fragment):**
-<img width="106" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c">
+![My Games]<img width="106" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c">
+
+
 - **Search (Fragment):**
-<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a">
+![Search]<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a">
+
+
 - **Chat (Fragment):**
-<img width="111" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c">
+![Chat]<img width="111" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c">
 
 
 ## Diagrams

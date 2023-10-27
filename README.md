@@ -58,7 +58,7 @@ The inspiration for this project came from our own experiences and frustrations 
 3. Sync Gradle and run the application.
 
 ## Usage
-Please refer to our comprehensive [User Guide](GOG - User Guide.docx) for detailed instructions on how to maximize your experience with Gathering of Gamers.
+Please refer to our comprehensive [User Guide](#GOG - User Guide.pdf) for detailed instructions on how to maximize your experience with Gathering of Gamers.
 
 ## Screenshots
 

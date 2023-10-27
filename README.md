@@ -1,92 +1,100 @@
-# gathering of gamers
+# Gathering Of Gamers
 
+## Table of Contents
+1. [Project Summary](#project-summary)
+2. [Motivation](#motivation)
+3. [Tech Stack](#tech-stack)
+4. [Getting Started](#getting-started)
+5. [Usage](#usage)
+6. [Screenshots](#screenshots)
+7. [Diagrams](#diagrams)
+8. [Future Enhancements](#future-enhancements)
+9. [FAQs](#faqs)
+10. [Acknowledgments](#acknowledgments)
 
+## Project Summary
 
-## Getting started
+### 1. Background and Context:
+Gaming is more than just an activity; it's a form of social interaction. Traditional multiplayer gaming relies on automated matchmaking systems that often pair players with incompatible gaming styles, creating a less-than-ideal experience. 
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### 2. Identified Problem:
+The inherent randomness of conventional matchmaking algorithms can often result in poor team dynamics. Even within rank-based systems, the lack of nuanced filters like gaming attitude and communication style can lead to mismatched teams.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### 3. Proposed Solution:
+We tackle this issue head-on with Gathering of Gamers, a groundbreaking app that aims to redefine how gamers connect. By considering multiple parameters like communication, competitiveness, and skill level, our app provides a curated matchmaking experience that brings like-minded gamers together.
 
-## Add your files
+### 4. Application Overview:
+The app interface is designed for simplicity and ease of use, prioritizing user experience. It allows gamers to profile themselves based on three critical aspects—communication, competitiveness, and skill level—across multiple games. The interface is available in English, making it globally accessible.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### 5. Application Features and Development:
+- **Real-time Chat:** Enables dynamic communication between players.
+- **AI Recommendation System:** Uses advanced algorithms to find the best match based on multiple attributes.
+- **Custom Search Filters:** From location to gender to game type, customize your search to find the perfect teammate.
+- **Profile Customization:** Integrated with the user's phone, the app allows users to update their profile pictures directly from their Google accounts or by capturing new photos.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/HabebNawatha/gathering-of-gamers.git
-git branch -M main
-git push -uf origin main
-```
+The backend is robustly built with Java, ensuring high performance and reliability. For frontend, we used Android-specific development tools for a seamless user experience. Firebase handles all data-related functionalities, offering enhanced security and control.
 
-## Integrate with your tools
+## Conclusion
+Gathering of Gamers is not just another gaming app; it's a comprehensive solution aiming to revolutionize the gaming world. By taking into consideration diverse gaming styles and individual preferences, we offer a personalized gaming experience. From the tech stack to the user interface, every aspect is designed with the user in mind.
 
-- [ ] [Set up project integrations](https://gitlab.com/HabebNawatha/gathering-of-gamers/-/settings/integrations)
+## Motivation
+The inspiration for this project came from our own experiences and frustrations with existing matchmaking systems. We believe that gaming should be enjoyable, social, and inclusive, and that's what Gathering of Gamers aims to achieve.
 
-## Collaborate with your team
+## Tech Stack
+- **Backend:** Java
+- **Frontend:** Android
+- **Database:** Firebase
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Getting Started
 
-## Test and Deploy
+### Prerequisites
+- Android Studio (version)
+- Firebase Account
+- Java Development Kit (JDK) (version)
 
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Installation
+1. Clone this repository.
+2. Import the project into Android Studio.
+3. Sync Gradle and run the application.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Please refer to our comprehensive [User Guide](#) for detailed instructions on how to maximize your experience with Gathering of Gamers.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Screenshots
+- **Sign up (Fragment_:**
+<img width="212" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2">
+- **Login (Fragment):**
+<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3">
+- **Profile Page (Fragment):**
+<img width="120" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4">
+- **My Games (Fragment):**
+<img width="106" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c">
+- **Search (Fragment):**
+<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a">
+- **Chat (Fragment):**
+<img width="111" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c">
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Diagrams
+- **ERD:**
+  ![ERD]![image](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/a4f6df32-ad1c-49c9-9d37-0e9624676412)
+- **Architecture Diagram:**
+  ![Architecture Diagram]<img width="452" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/4dd02a7f-9756-4e12-b7da-c3ea66787c49">
+- **Use Case Diagram:**
+  ![Use Case Diagram]![image](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/77a948fe-23bd-4635-a09d-cbcad40bbbbb)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Future Enhancements
+- User rating systems
+- Support for multiple languages
+- Geolocation-based matchmaking
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## FAQs
+- **Is the app free to use?**
+  - Yes, the basic version is free.
+- **Do I need to create an account?**
+  - Yes, account creation is necessary to personalize your experience.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Acknowledgments
+- All team members who have put their heart and soul into this project.
+- To our mentors and advisors for their valuable insights.
+- To Firebase for making data management easy and secure.

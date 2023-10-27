@@ -61,37 +61,35 @@ The inspiration for this project came from our own experiences and frustrations 
 Please refer to our comprehensive [User Guide](#) for detailed instructions on how to maximize your experience with Gathering of Gamers.
 
 ## Screenshots
-- **Sign up (Fragment):**
-![Sign Up]<img width="212" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2">
 
+- **Sign up (Fragment):**
+  ![Sign Up](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/65a55fb9-bba3-4557-a25f-7ddb18b16ba2){:width="250px"}
 
 - **Login (Fragment):**
-![Login]<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3">
-
+  ![Login](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/96cba4db-1908-4ab9-95e0-3d2df6e697b3){:width="250px"}
 
 - **Profile Page (Fragment):**
-![Profile Page]<img width="120" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4">
-
+  ![Profile Page](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/56e575e2-0008-43c3-b178-c7a30d4224a4){:width="250px"}
 
 - **My Games (Fragment):**
-![My Games]<img width="106" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c">
-
+  ![My Games](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/ca862f34-87e1-4bf3-a5a6-4081d2a9174c){:width="250px"}
 
 - **Search (Fragment):**
-![Search]<img width="211" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a">
-
+  ![Search](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/021c3899-dce7-4aa5-b6e0-007ae08e789a){:width="250px"}
 
 - **Chat (Fragment):**
-![Chat]<img width="111" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c">
-
+  ![Chat](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/fc110ad2-5d25-4749-adf6-1a9e66817f2c){:width="250px"}
 
 ## Diagrams
 - **ERD:**
-  ![ERD]![image](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/a4f6df32-ad1c-49c9-9d37-0e9624676412)
+  ![ERD](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/a4f6df32-ad1c-49c9-9d37-0e9624676412){:width="250px"}
+  
 - **Architecture Diagram:**
-  ![Architecture Diagram]<img width="452" alt="image" src="https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/4dd02a7f-9756-4e12-b7da-c3ea66787c49">
+  ![Architecture Diagram](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/4dd02a7f-9756-4e12-b7da-c3ea66787c49){:width="250px"}
+  
 - **Use Case Diagram:**
-  ![Use Case Diagram]![image](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/77a948fe-23bd-4635-a09d-cbcad40bbbbb)
+  ![Use Case Diagram](https://github.com/moranfarraj/Final-BSc-Project/assets/103493412/77a948fe-23bd-4635-a09d-cbcad40bbbbb){:width="250px"}
+
 
 ## Future Enhancements
 - User rating systems

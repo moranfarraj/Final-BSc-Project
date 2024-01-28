@@ -28,7 +28,6 @@ The app interface is designed for simplicity and ease of use, prioritizing user 
 
 ### 5. Application Features and Development:
 - **Real-time Chat:** Enables dynamic communication between players.
-- **AI Recommendation System:** Uses advanced algorithms to find the best match based on multiple attributes.
 - **Custom Search Filters:** From location to gender to game type, customize your search to find the perfect teammate.
 - **Profile Customization:** Integrated with the user's phone, the app allows users to update their profile pictures directly from their Google accounts or by capturing new photos.
 
